@@ -237,6 +237,12 @@ INSERT INTO CRISPI.Cliente(cliente_apellido,cliente_nombre,cliente_dni,cliente_f
 PRINT 'Clientes migrados correctamente'
 GO
 
+SELECT DISTINCT Cli_Apellido,Cli_Nombre, Cli_Dni,sum(Carga_Credito)
+		FROM gd_esquema.Maestra m
+		where m.Cli_Dni is not null 
+		group by m.Cli_Dni,m.Cli_Apellido,m.Cli_Nombre
+		ORDER BY m.Cli_Dni
+
 PRINT 'Migracion de  Proveedores'
 INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_ciudad,proveedor_dom,proveedor_rs,proveedor_rubro,proveedor_telefono,proveedor_ciudad)
 	SELECT DISTINCT Provee_CUIT,Provee_Ciudad,Provee_Dom,Provee_RS,Provee_Rubro,Provee_Telefono,a.ciudad_id
@@ -251,7 +257,7 @@ INSERT INTO CRISPI.Rubro_Proveedor(rubro_proveedor,rubro)
 	SELECT DISTINCT a.proveedor_id,r.rubro_id
 		FROM gd_esquema.Maestra m,CRISPI.Proveedor a,CRISPI.Rubro r
 		where m.Provee_CUIT is not null and m.Provee_CUIT=a.proveedor_cuit and m.Provee_Rubro=r.rubro_nombre
-		ORDER BY m.Cli_Dni
+		ORDER BY m.Provee_CUIT
 PRINT 'Rubro Proveedor migrados correctamente'
 GO
 
@@ -264,12 +270,21 @@ INSERT INTO CRISPI.Credito(credito_fecha,credito_monto,credito_tipo,credito_usua
 PRINT 'Credito migrados correctamente'
 GO
 
+PRINT 'Migracion oferta'
+INSERT INTO CRISPI.Oferta(oferta_codigo,oferta_descripcion,oferta_fechaf,oferta_lista,oferta_precio,oferta_fechap,oferta_proveedor,oferta_cantidad)
+	SELECT DISTINCT Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha_Venc,Oferta_Precio_Ficticio,Oferta_Precio,Oferta_Fecha,r.proveedor_id,Oferta_Cantidad
+		FROM gd_esquema.Maestra m,CRISPI.TIPO a,CRISPI.Proveedor r
+		where m.Oferta_Codigo is not null and m.Provee_CUIT=r.proveedor_cuit 
+		ORDER BY m.Oferta_Codigo
+PRINT 'oferta migrados correctamente'
+GO
+
 SELECT  *
 FROM gd_esquema.Maestra m
-where m.Oferta_Codigo is not null
+where m.Carga_Credito is not null
 order by m.Oferta_Codigo
 
-SELECT *
+SELECT DISTINCT Cli_Dni,Cli_Nombre,Carga_Credito
 FROM gd_esquema.Maestra m 
-where m.Oferta_Entregado_Fecha is not null 
+where m.Cli_Dni is not null 
 group by Cli_Apellido,Cli_Dni
