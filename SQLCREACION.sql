@@ -1,7 +1,9 @@
+USE GD2C2019
+GO
 -------------------------------------/* CREACION ESQUEMA */-------------------------------------
 
-CREATE SCHEMA CRISPI
-GO
+--CREATE SCHEMA CRISPI
+--GO
 
 -------------------------------------/* CREACION TABLAS */-------------------------------------
 
@@ -32,8 +34,9 @@ CREATE TABLE CRISPI.Cliente(
 	cliente_telefono numeric(18,0) NOT NULL,
 	cliente_mail nvarchar(255) NOT NULL,
 	cliente_credito numeric(18,2) NOT NULL,
-	cliente_fechanac datetime2(3) NOT NULL
-	)
+	cliente_fechanac datetime2(3) NOT NULL,
+	cliente_codigo_postal int NULL,
+)
 
 CREATE TABLE CRISPI.Funcionalidad( 
     funcionalidad_id int IDENTITY(1,1) PRIMARY KEY,
@@ -53,9 +56,8 @@ CREATE TABLE CRISPI.Proveedor(
 	proveedor_rs nvarchar(100),
 	proveedor_dom nvarchar(100),
 	proveedro_mail nvarchar(100),
-	proveedor_ciudad int CONSTRAINT FK_ROLUSUARIO_PROVEEDOR REFERENCES CRISPI.Ciudad(ciudad_id),
+	proveedor_ciudad_id int CONSTRAINT FK_PROVEEDOR_CIUDAD REFERENCES CRISPI.Ciudad(ciudad_id),
 	proveedor_telefono numeric(18,0),
-
 	)
 
 CREATE TABLE CRISPI.Rol_Por_Usuario( 
@@ -88,22 +90,12 @@ CREATE TABLE CRISPI.TIPO(
 	tipo_id int IDENTITY(1,1) PRIMARY KEY,
 	tipo_nombre nvarchar(100) UNIQUE NOT NULL,
 	)
-CREATE TABLE CRISPI.Provedor( 
-	provedor_id int IDENTITY(1,1) PRIMARY KEY,
-	provedor_nombre nvarchar(50) UNIQUE NOT NULL,
-	provedor_cuit nvarchar(20),
-	provedor_rubro nvarchar(100),
-	provedor_rs nvarchar(100),
-	provedor_dom nvarchar(100),
-	provedor_ciudad nvarchar(255),
-	provedor_telefono numeric(18,0),
 
-	)
 CREATE TABLE CRISPI.Credito( 
 	credito_id int IDENTITY(1,1) PRIMARY KEY,
 	credito_fecha datetime2(3),
 	credito_monto numeric(18,2),
-	credito_usuario int CONSTRAINT FK_CREDITO_USUARIO REFERENCES CRISPI.Usuario(usuario_id), 
+	credito_cliente int CONSTRAINT FK_CREDITO_CLIENTE REFERENCES CRISPI.Cliente(cliente_id), 
 	credito_tipo int CONSTRAINT FK_CREDITO_TIPO REFERENCES CRISPI.TIPO(tipo_id),
 	credito_tarjeta decimal(18,0),
 	credito_datos nvarchar(255),
@@ -130,63 +122,48 @@ CREATE TABLE CRISPI.Facturacion(
 	
 )
 
-CREATE TABLE EL_TITANIC.Compra( 
-	compra_id decimal(18,0) PRIMARY KEY,
-	compra_usuario int CONSTRAINT FK_COMPRA_USUARIO REFERENCES EL_TITANIC.Usuario(usuario_id),
-	compra_viaje INT CONSTRAINT FK_COMPRA_VIAJE REFERENCES EL_TITANIC.Viaje(viaje_id),
-	compra_medioDePago int CONSTRAINT FK_COMPRA_MEDIOPAGO REFERENCES EL_TITANIC.Medio_de_Pago(mediopago_id),
-	compra_fecha datetime2(3) NOT NULL,
-)
-
-
-PRINT '----- COMIENZA LA CREACION DE DATOS -----'
+    PRINT '----- COMIENZA LA CREACION DE DATOS -----'
 
 PRINT 'Creando roles'
 GO
+
 INSERT INTO CRISPI.Rol (rol_nombre, rol_estado)
-         values('Administrador', 1);
-		 GO
-INSERT INTO CRISPI.Rol (rol_nombre, rol_estado)    
-         values('Usuario', 1);
-		 GO
+         values('Administrador', 1),
+		 ('Usuario', 1),
+		 ('Proveedor',1)
+GO
+
 PRINT 'Roles creados correctamente'
 GO
 
 PRINT 'Creando funcionalidades'
 INSERT INTO CRISPI.Funcionalidad (funcionalidad_descripcion)
-         values('ABM Rol');
-INSERT INTO CRISPI.Funcionalidad (funcionalidad_descripcion)
-	     values('Registro de Usuario');
-INSERT INTO CRISPI.Funcionalidad (funcionalidad_descripcion)
-	     values('ABM Oferta');
-INSERT INTO CRISPI.Funcionalidad (funcionalidad_descripcion)
-	     values('ABM');
-INSERT INTO CRISPI.Funcionalidad (funcionalidad_descripcion)
-	     values('Compra ');
-INSERT INTO CRISPI.Funcionalidad (funcionalidad_descripcion)
-	     values('Listado Estadistico');
+         values('ALTA_ROL'),
+		 ('BAJA_ROL'),
+		 ('MODIFICACION_ROL'),
+		 ('ALTA_OFERTA'),
+		 ('BAJA_OFERTA'),
+		 ('MODIFICACION_OFERTA'),
+		 ('VISUALIZACION_CLIENTES'),
+		 ('VISUALIZACION_PROVEEDORES'),
+		 ('VISUALIZACION_LISTADO_ESTADISTICO');
+
 PRINT 'Funcionalidades creadas correctamente'
 GO
 
 
 PRINT 'Asignando funcionalidad a los roles'
 INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,1); --Administrador, ABM Rol
-INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,2); --Administrador, Registro de Usuario
-INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,3); --Administrador, 
-INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,4); --Administrador,  
-INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,6); --Usuario,
-INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,7) --Usuario,  
-INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,8) --Usuario, 
-INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-         values(1,9); --Administrador, Listado Estadistico
-
+         values(1,1),
+         (1,2),
+		 (1,3),
+		 (1,4),
+		 (1,5),
+		 (1,6),
+		 (1,7),
+		 (1,8),
+		 (1,9);
+--falta la asignacion de cliente y proveedores
 PRINT 'Funcionalidades asignadas a los roles correctamente'
 GO
 
@@ -196,17 +173,12 @@ GO
 PRINT '----- COMIENZA LA MIGRACION -----'
 
 PRINT 'Migracion de ciudades'
-INSERT INTO CRISPI.Ciudad(ciudad_nombre)
-	SELECT DISTINCT Provee_Ciudad
-    FROM gd_esquema.Maestra m
-    where m.Provee_Ciudad is not null
-	ORDER BY m.Provee_Ciudad
 
 INSERT INTO CRISPI.Ciudad(ciudad_nombre)
 	SELECT DISTINCT Cli_Ciudad
     FROM gd_esquema.Maestra m
-    where m.Cli_Ciudad is not null and m.Cli_Ciudad not in (select ciudad_nombre from CRISPI.Ciudad)
-	ORDER BY m.Cli_Ciudad
+    where m.Cli_Ciudad is not null
+	ORDER BY 1
 PRINT 'Ciudades migrados correctamente'
 GO
 
@@ -215,7 +187,7 @@ INSERT INTO CRISPI.Rubro(rubro_nombre)
 	SELECT DISTINCT Provee_Rubro
 		FROM gd_esquema.Maestra m
 		where m.Provee_Rubro is not null
-		ORDER BY m.Provee_Rubro
+		ORDER BY 1
 PRINT 'Rubro migrados correctamente'
 GO
 
@@ -224,31 +196,26 @@ INSERT INTO CRISPI.TIPO(tipo_nombre)
 	SELECT DISTINCT Tipo_Pago_Desc
 		FROM gd_esquema.Maestra m
 		where m.Tipo_Pago_Desc is not null
-		ORDER BY m.Tipo_Pago_Desc
+		ORDER BY 1
 PRINT 'Tipos migrados correctamente'
 GO
 
 PRINT 'Migracion de clientes'
-INSERT INTO CRISPI.Cliente(cliente_apellido,cliente_nombre,cliente_dni,cliente_fechanac,cliente_direccion,cliente_mail,cliente_telefono,cliente_ciudad_id)
-	SELECT DISTINCT Cli_Apellido,Cli_Nombre, Cli_Dni,Cli_Fecha_Nac,Cli_Direccion,Cli_Mail,Cli_Telefono,a.ciudad_id
+INSERT INTO CRISPI.Cliente(cliente_apellido,cliente_nombre,cliente_dni,cliente_fechanac,cliente_direccion,cliente_mail,cliente_telefono,cliente_ciudad_id,cliente_credito)
+	SELECT Cli_Apellido,Cli_Nombre, Cli_Dni,Cli_Fecha_Nac,Cli_Direccion,Cli_Mail,Cli_Telefono,a.ciudad_id,SUM(ISNULL(Carga_Credito,0))
 		FROM gd_esquema.Maestra m,CRISPI.Ciudad a
-		where m.Cli_Dni is not null and m.Cli_Ciudad=a.ciudad_nombre
+		where m.Cli_Dni is not null and m.Cli_Ciudad = a.ciudad_nombre
+		group by Cli_Apellido,Cli_Nombre, Cli_Dni,Cli_Fecha_Nac,Cli_Direccion,Cli_Mail,Cli_Telefono,a.ciudad_id
 		ORDER BY m.Cli_Dni
 PRINT 'Clientes migrados correctamente'
 GO
 
-SELECT DISTINCT Cli_Apellido,Cli_Nombre, Cli_Dni,sum(Carga_Credito)
-		FROM gd_esquema.Maestra m
-		where m.Cli_Dni is not null 
-		group by m.Cli_Dni,m.Cli_Apellido,m.Cli_Nombre
-		ORDER BY m.Cli_Dni
-
 PRINT 'Migracion de  Proveedores'
-INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_ciudad,proveedor_dom,proveedor_rs,proveedor_rubro,proveedor_telefono,proveedor_ciudad)
-	SELECT DISTINCT Provee_CUIT,Provee_Ciudad,Provee_Dom,Provee_RS,Provee_Rubro,Provee_Telefono,a.ciudad_id
+INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_dom,proveedor_rs,proveedor_rubro,proveedor_telefono,proveedor_ciudad_id)
+	SELECT DISTINCT Provee_CUIT,Provee_Dom,Provee_RS,Provee_Rubro,Provee_Telefono,a.ciudad_id
     FROM gd_esquema.Maestra m ,CRISPI.Ciudad a
     where m.Provee_CUIT is not null and m.Provee_Ciudad=a.ciudad_nombre 
-	ORDER BY m.Provee_CUIT
+	ORDER BY Provee_CUIT
 PRINT 'Proveedores migrados correctamente'
 GO
 
@@ -257,16 +224,16 @@ INSERT INTO CRISPI.Rubro_Proveedor(rubro_proveedor,rubro)
 	SELECT DISTINCT a.proveedor_id,r.rubro_id
 		FROM gd_esquema.Maestra m,CRISPI.Proveedor a,CRISPI.Rubro r
 		where m.Provee_CUIT is not null and m.Provee_CUIT=a.proveedor_cuit and m.Provee_Rubro=r.rubro_nombre
-		ORDER BY m.Provee_CUIT
+		ORDER BY a.proveedor_id
 PRINT 'Rubro Proveedor migrados correctamente'
 GO
 
 PRINT 'Migracion Credito'
-INSERT INTO CRISPI.Credito(credito_fecha,credito_monto,credito_tipo,credito_usuario)
+INSERT INTO CRISPI.Credito(credito_fecha,credito_monto,credito_tipo,credito_cliente)
 	SELECT DISTINCT Carga_Fecha,Carga_Credito,a.tipo_id,r.cliente_id
 		FROM gd_esquema.Maestra m,CRISPI.TIPO a,CRISPI.Cliente r
 		where m.Carga_Credito is not null and m.Tipo_Pago_Desc=a.tipo_nombre and m.Cli_Dni=r.cliente_dni
-		ORDER BY m.Cli_Dni
+		ORDER BY r.cliente_id
 PRINT 'Credito migrados correctamente'
 GO
 
@@ -279,12 +246,4 @@ INSERT INTO CRISPI.Oferta(oferta_codigo,oferta_descripcion,oferta_fechaf,oferta_
 PRINT 'oferta migrados correctamente'
 GO
 
-SELECT  *
-FROM gd_esquema.Maestra m
-where m.Carga_Credito is not null
-order by m.Oferta_Codigo
 
-SELECT DISTINCT Cli_Dni,Cli_Nombre,Carga_Credito
-FROM gd_esquema.Maestra m 
-where m.Cli_Dni is not null 
-group by Cli_Apellido,Cli_Dni
