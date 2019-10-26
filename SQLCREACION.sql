@@ -144,8 +144,10 @@ CREATE TABLE CRISPI.Cupones(
 	cupones_estado_id int CONSTRAINT FK_ITEM_FACTURACION REFERENCES CRISPI.Facturacion(facturacion_id),
 	cupones_cliente_id int CONSTRAINT FK_ITEM_CLIENTE REFERENCES CRISPI.Cliente(cliente_id),
 	cupones_oferta_id int CONSTRAINT FK_ITEM_OFERTA REFERENCES CRISPI.OFERTA(oferta_id),
+	cupones_fecha datetime2(3),
 	
 )
+
     PRINT '----- COMIENZA LA CREACION DE DATOS -----'
 
 PRINT 'Creando roles'
@@ -290,22 +292,38 @@ GO
 
 
 PRINT 'Migracion item facturacion'
-INSERT INTO CRISPI.Item_factura(facturacion_id,cliente_id,item_factura_cantidad,oferta_id)
+INSERT INTO CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id)
 
-select a.facturacion_id,c.cliente_id,m.Oferta_Cantidad,o.oferta_id
+select a.facturacion_id,c.cliente_id,o.oferta_id
 from gd_esquema.Maestra m,CRISPI.Facturacion a,CRISPI.Cliente c,CRISPI.Oferta o
 where m.Factura_Nro is not null and m.Factura_Nro=a.facturacion_nro and m.Cli_Dni=c.cliente_dni and m.Oferta_Codigo=o.oferta_codigo
 PRINT ' migrados correctamente'
 GO
 
-select a.facturacion_id,c.cliente_id
-from gd_esquema.Maestra m,CRISPI.Facturacion a,CRISPI.Cliente c
-where Factura_Fecha is not null and m.Factura_Nro=a.facturacion_nro and m.Cli_Dni=c.cliente_dni
+
+PRINT 'Migracion cupones'
+INSERT INTO CRISPI.Cupones(cupones_oferta_id,cupones_cliente_id,cupones_estado_id,cupones_fecha)
+
+select o.oferta_id,c.cliente_id,1,m.Oferta_Fecha_Compra
+from gd_esquema.Maestra m,CRISPI.Oferta o,CRISPI.Cliente c
+where m.Factura_Nro is not null and m.Factura_Nro=o.oferta_codigo and m.Cli_Dni=c.cliente_dni
+
+PRINT ' migrados correctamente'
+GO
+
+select *
+from gd_esquema.Maestra m
+where m.Factura_Nro is not null 
+order by m.Factura_Nro
 
 		
-SELECT *
+SELECT m.Cli_Dni,m.Oferta_Codigo,m.Factura_Nro,count(m.Cli_Dni)
 FROM gd_esquema.Maestra m
 where m.Factura_Nro is not null
+group by m.Cli_Dni,m.Oferta_Codigo,m.Factura_Nro
+order by m.Factura_Nro
+
+
 
 
 
