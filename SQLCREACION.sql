@@ -2,8 +2,8 @@ USE GD2C2019
 GO
 -------------------------------------/* CREACION ESQUEMA */-------------------------------------
 
---CREATE SCHEMA CRISPI
---GO
+CREATE SCHEMA CRISPI
+GO
 
 -------------------------------------/* CREACION TABLAS */-------------------------------------
 
@@ -116,24 +116,56 @@ CREATE TABLE CRISPI.Oferta(
 
 CREATE TABLE CRISPI.Facturacion(
 	facturacion_id int IDENTITY(1,1) PRIMARY KEY,
+	facturacion_nro numeric(18,0),
+	facturacion_tipo nvarchar(1),
 	facturacion_proveedor int CONSTRAINT FK_FACTURACION_PROVEEDOR REFERENCES CRISPI.Proveedor(proveedor_id),
 	facturacion_fecha datetime2(3),
 	facturacion_monto int,
 	
 )
 
+CREATE TABLE CRISPI.Item_factura(
+	item_factura_id int IDENTITY(1,1) PRIMARY KEY,
+	facturacion_id int CONSTRAINT FK_ITEM_FACTURACION REFERENCES CRISPI.Facturacion(facturacion_id),
+	cliente_id int CONSTRAINT FK_ITEM_CLIENTE REFERENCES CRISPI.Cliente(cliente_id),
+	oferta_id int CONSTRAINT FK_ITEM_OFERTA REFERENCES CRISPI.OFERTA(oferta_id),
+	item_factura_cantidad int ,
+	
+)
+
+CREATE TABLE CRISPI.Estado(
+	estado_id int IDENTITY(1,1) PRIMARY KEY,
+	estado nvarchar(50),
+	
+)
+
+CREATE TABLE CRISPI.Cupones(
+	cupones_id int IDENTITY(1,1) PRIMARY KEY,
+	cupones_estado_id int CONSTRAINT FK_ITEM_FACTURACION REFERENCES CRISPI.Facturacion(facturacion_id),
+	cupones_cliente_id int CONSTRAINT FK_ITEM_CLIENTE REFERENCES CRISPI.Cliente(cliente_id),
+	cupones_oferta_id int CONSTRAINT FK_ITEM_OFERTA REFERENCES CRISPI.OFERTA(oferta_id),
+	
+)
     PRINT '----- COMIENZA LA CREACION DE DATOS -----'
 
 PRINT 'Creando roles'
-GO
 
 INSERT INTO CRISPI.Rol (rol_nombre, rol_estado)
          values('Administrador', 1),
 		 ('Usuario', 1),
 		 ('Proveedor',1)
-GO
 
 PRINT 'Roles creados correctamente'
+GO
+
+PRINT 'Creando estados'
+
+INSERT INTO CRISPI.Estado(estado,estado_id)
+         values('', 1),
+		 ('', 2)
+		 
+
+PRINT 'estados creados correctamente'
 GO
 
 PRINT 'Creando funcionalidades'
@@ -245,5 +277,35 @@ INSERT INTO CRISPI.Oferta(oferta_codigo,oferta_descripcion,oferta_fechaf,oferta_
 		ORDER BY m.Oferta_Codigo
 PRINT 'oferta migrados correctamente'
 GO
+
+PRINT 'Migracion facturacion'
+INSERT INTO CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_monto,facturacion_proveedor)
+	
+SELECT m.Factura_Nro,'A',m.Factura_Fecha,count(m.Factura_Nro)*m.Oferta_Precio,a.proveedor_id
+FROM gd_esquema.Maestra m,CRISPI.Proveedor a
+where m.Factura_Nro is not null and m.Provee_CUIT=a.proveedor_cuit
+group by m.Factura_Nro,m.Factura_Fecha
+PRINT 'Rubro Proveedor migrados correctamente'
+GO
+
+
+PRINT 'Migracion item facturacion'
+INSERT INTO CRISPI.Item_factura(facturacion_id,cliente_id,item_factura_cantidad,oferta_id)
+
+select a.facturacion_id,c.cliente_id,m.Oferta_Cantidad,o.oferta_id
+from gd_esquema.Maestra m,CRISPI.Facturacion a,CRISPI.Cliente c,CRISPI.Oferta o
+where m.Factura_Nro is not null and m.Factura_Nro=a.facturacion_nro and m.Cli_Dni=c.cliente_dni and m.Oferta_Codigo=o.oferta_codigo
+PRINT ' migrados correctamente'
+GO
+
+select a.facturacion_id,c.cliente_id
+from gd_esquema.Maestra m,CRISPI.Facturacion a,CRISPI.Cliente c
+where Factura_Fecha is not null and m.Factura_Nro=a.facturacion_nro and m.Cli_Dni=c.cliente_dni
+
+		
+SELECT *
+FROM gd_esquema.Maestra m
+where m.Factura_Nro is not null
+
 
 
