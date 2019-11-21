@@ -311,19 +311,107 @@ where m.Factura_Nro is not null and m.Factura_Nro=o.oferta_codigo and m.Cli_Dni=
 PRINT ' migrados correctamente'
 GO
 
-select *
-from gd_esquema.Maestra m
-where m.Factura_Nro is not null 
-order by m.Factura_Nro
 
-		
-SELECT m.Cli_Dni,m.Oferta_Codigo,m.Factura_Nro,count(m.Cli_Dni)
-FROM gd_esquema.Maestra m
-where m.Factura_Nro is not null
-group by m.Cli_Dni,m.Oferta_Codigo,m.Factura_Nro
-order by m.Factura_Nro
+-------------------------------------/* STORED PROCEDURES */-------------------------------------
+
+----------------------------------------------ABM ROL------------------------------------------
+
+CREATE procedure CRISPI.InsertarRol
+@nombre nvarchar(50)
+as
+begin
+begin tran ta
+begin try
+    if( not exists (select rol_nombre  from CRISPI.Rol where rol_nombre = @nombre) ) 
+	begin
+	insert into CRISPI.Rol (rol_nombre, rol_estado)
+	values(@nombre,1);
+	end
+commit tran ta
+end try
+begin catch
+rollback tran ta
+end catch
+end
+GO
+
+CREATE proc CRISPI.EliminarRol
+@nombre nvarchar(50)
+as
+begin
+begin tran ta
+begin try
+	update CRISPI.Rol
+	set rol_estado = 0
+	where rol_nombre = @nombre;
+	delete CRISPI.Rol_Por_Usuario
+	where rol_id in (select rol_id from CRISPI.Rol where rol_nombre = @nombre)	 
+commit tran ta
+end try
+begin catch
+rollback tran ta
+end catch
+end
+GO
+
+CREATE proc CRISPI.HabilitarRol
+@nombre nvarchar(50)
+as
+begin
+begin tran ta
+begin try
+	update CRISPI.Rol
+	set rol_estado = 1
+	where rol_nombre = @nombre;
+	delete CRISPI.Rol_Por_Usuario
+	where rol_id in (select rol_id from CRISPI.Rol where rol_nombre = @nombre)	 
+commit tran ta
+end try
+begin catch
+rollback tran ta
+end catch
+end
+GO
 
 
+
+CREATE proc CRISPI.ModificarNombreRol
+@rol_nombre nvarchar(50),
+@nombre nvarchar(50)
+as 
+begin
+begin tran ta
+begin try
+      update CRISPI.Rol 
+	  set rol_nombre = @nombre
+	  where rol_id in (select rol_id from CRISPI.Rol where rol_nombre = @rol_nombre)  
+commit tran ta
+end try
+begin catch
+rollback tran ta
+end catch
+end
+GO
+
+CREATE proc CRISPI.InsertarFuncXRol
+@rol numeric(18,0),
+@funcionalidad numeric(18,0)
+as
+begin
+begin tran ta
+begin try
+    if( not exists (select rol_id, funcionalidad_id from CRISPI.Rol_Por_Funcionalidad where rol_id = @rol and funcionalidad_id = @funcionalidad) ) 
+	begin
+	insert into CRISPI.Rol_Por_Funcionalidad(rol_id,funcionalidad_id) 
+	values(@rol,@funcionalidad);
+	end
+commit tran ta
+end try
+begin catch
+rollback tran ta
+end catch
+end
+GO
 
 
 
