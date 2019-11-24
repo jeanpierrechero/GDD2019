@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrbaOfertas", "FrbaOfertas\FrbaOfertas.csproj", "{153E2789-1BFE-49B9-A909-15E3DF8FF63E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "conexionsql", "conexionsql\conexionsql.csproj", "{1B6F2900-EB79-483B-BC30-8807A87F848E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +17,15 @@ Global
 		{153E2789-1BFE-49B9-A909-15E3DF8FF63E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{153E2789-1BFE-49B9-A909-15E3DF8FF63E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{153E2789-1BFE-49B9-A909-15E3DF8FF63E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6F2900-EB79-483B-BC30-8807A87F848E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6F2900-EB79-483B-BC30-8807A87F848E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6F2900-EB79-483B-BC30-8807A87F848E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6F2900-EB79-483B-BC30-8807A87F848E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8F6AB63-DE9C-47D0-A863-C8B8C4717761}
 	EndGlobalSection
 EndGlobal
