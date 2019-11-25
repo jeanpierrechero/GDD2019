@@ -58,3 +58,59 @@ begin catch
 	rollback transaction
 end catch
 GO
+
+
+
+
+create or alter procedure CRISPI.proc_create_usuario_proveedor
+	@razon_social nvarchar(100),
+	@username nvarchar(255),
+	@password nvarchar(255),
+	@cuit nvarchar(20),
+	@direccion nvarchar(255),
+	@ciudad int,
+	@telefono numeric(18,0),
+	@mail nvarchar(255)
+as
+begin try
+	begin transaction
+
+	declare @id_proveedor int;
+
+	exec CRISPI.proc_create_proveedor @cuit,@razon_social,@direccion,@mail,@ciudad,@telefono,@id = @id_proveedor;
+		
+	INSERT INTO CRISPI.Usuario(usuario_username,usuario_password,usuario_proveedor_id,usuario_habilitado,usuario_estado,usuario_cantidad_errores)
+	values(@username,HASHBYTES('SHA2_256', CONVERT(nvarchar(50), @password)),@id_proveedor,1,1,0)
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+end catch
+GO
+
+
+create or alter procedure CRISPI.proc_create_proveedor
+	@razon_social nvarchar(100),
+	@cuit nvarchar(20),
+	@direccion nvarchar(255),
+	@ciudad int,
+	@telefono numeric(18,0),
+	@mail nvarchar(255),
+	@id int output
+
+as
+begin try
+	begin transaction
+	
+	INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_rs,proveedor_dom,proveedor_mail,proveedor_ciudad_id,proveedor_telefono,proveedor_estado)
+	values(@cuit,@razon_social,@direccion,@mail,@ciudad,@telefono,1)
+	SET @id=SCOPE_IDENTITY()
+	RETURN  @id
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+end catch
+GO
