@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using conexionsql;
+
 namespace FrbaOfertas
 {
     public partial class contenedor : Form
@@ -107,9 +108,9 @@ namespace FrbaOfertas
 
         private void altaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            nuevo nuevocliente = new nuevo();
-            this.Hide();
-            nuevocliente.show();
+            AbmCliente.nuevo nuevocliente = new AbmCliente.nuevo();
+            nuevocliente.MdiParent = this;
+            nuevocliente.Show();
         }
 
         private void modificacionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,6 +120,14 @@ namespace FrbaOfertas
 
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void agregarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbmProveedor.nuevoproveedor proveedor = new AbmProveedor.nuevoproveedor();
+            proveedor.MdiParent = this;
+            proveedor.Show();
 
         }
     }

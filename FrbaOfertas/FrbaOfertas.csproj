@@ -74,11 +74,23 @@
     <Compile Include="AbmCliente\nuevo.Designer.cs">
       <DependentUpon>nuevo.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmProveedor\eliminarproveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmProveedor\eliminarproveedor.Designer.cs">
+      <DependentUpon>eliminarproveedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmProveedor\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmProveedor\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmProveedor\nuevoproveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmProveedor\nuevoproveedor.Designer.cs">
+      <DependentUpon>nuevoproveedor.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\Form1.cs">
       <SubType>Form</SubType>
@@ -132,6 +144,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AbmCliente\nuevo.resx">
       <DependentUpon>nuevo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmProveedor\eliminarproveedor.resx">
+      <DependentUpon>eliminarproveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmProveedor\nuevoproveedor.resx">
+      <DependentUpon>nuevoproveedor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
