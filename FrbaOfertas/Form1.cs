@@ -45,9 +45,9 @@ namespace FrbaOfertas
                     }
                     else
                     {
-                        contenedor u = new contenedor();
+                        contenedor u2 = new contenedor();
                         this.Hide();
-                        u.Show();
+                        u2.Show();
                     }
                    
                 }
