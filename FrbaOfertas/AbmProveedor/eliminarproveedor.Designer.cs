@@ -30,8 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.proveedoreliminar = new System.Windows.Forms.TextBox();
             this.proveedor = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.eliminar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -52,27 +53,38 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "codigo";
             // 
+            // proveedoreliminar
+            // 
+            this.proveedoreliminar.Location = new System.Drawing.Point(271, 32);
+            this.proveedoreliminar.Name = "proveedoreliminar";
+            this.proveedoreliminar.Size = new System.Drawing.Size(186, 22);
+            this.proveedoreliminar.TabIndex = 2;
+            // 
             // proveedor
             // 
-            this.proveedor.Location = new System.Drawing.Point(271, 32);
+            this.proveedor.Location = new System.Drawing.Point(271, 76);
             this.proveedor.Name = "proveedor";
             this.proveedor.Size = new System.Drawing.Size(186, 22);
-            this.proveedor.TabIndex = 2;
+            this.proveedor.TabIndex = 3;
             // 
-            // textBox2
+            // eliminar
             // 
-            this.textBox2.Location = new System.Drawing.Point(271, 76);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(186, 22);
-            this.textBox2.TabIndex = 3;
+            this.eliminar.Location = new System.Drawing.Point(73, 134);
+            this.eliminar.Name = "eliminar";
+            this.eliminar.Size = new System.Drawing.Size(75, 23);
+            this.eliminar.TabIndex = 4;
+            this.eliminar.Text = "eliminar";
+            this.eliminar.UseVisualStyleBackColor = true;
+            this.eliminar.Click += new System.EventHandler(this.eliminar_Click);
             // 
             // eliminarproveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox2);
+            this.ClientSize = new System.Drawing.Size(570, 283);
+            this.Controls.Add(this.eliminar);
             this.Controls.Add(this.proveedor);
+            this.Controls.Add(this.proveedoreliminar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "eliminarproveedor";
@@ -86,7 +98,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox proveedoreliminar;
         private System.Windows.Forms.TextBox proveedor;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button eliminar;
     }
 }

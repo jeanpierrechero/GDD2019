@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbmCliente\eliminarcliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\eliminarcliente.Designer.cs">
+      <DependentUpon>eliminarcliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCliente\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +148,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AbmCliente\eliminarcliente.resx">
+      <DependentUpon>eliminarcliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\nuevo.resx">
       <DependentUpon>nuevo.cs</DependentUpon>
     </EmbeddedResource>

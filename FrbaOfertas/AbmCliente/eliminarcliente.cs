@@ -8,25 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using conexionsql;
-namespace FrbaOfertas.AbmProveedor
+namespace FrbaOfertas.AbmCliente
 {
-    public partial class eliminarproveedor : Form
+    public partial class eliminarcliente : Form
     {
-        public eliminarproveedor()
+        public eliminarcliente()
         {
             InitializeComponent();
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void eliminar_Click(object sender, EventArgs e)
         {
             try
             {
-                string instruccion = string.Format("EXEC  '{0}','{1}'", proveedoreliminar.Text.Trim(), proveedor.Text.Trim());
+                string instruccion = string.Format("EXEC  '{0}','{1}'", cliente.Text.Trim(), numero.Text.Trim());
                 utilidades.ejecutar(instruccion);
                 MessageBox.Show("eliminado");
 
