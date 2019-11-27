@@ -1,7 +1,7 @@
 CREATE OR ALTER PROCEDURE CRISPI.proc_create_tables
 AS
-BEGIN TRY
-	BEGIN TRANSACTION	
+BEGIN TRY	
+	begin transaction;
 
 	PRINT '----- Empezando a crear tablas -----'
 	CREATE TABLE CRISPI.Usuario( 
@@ -96,7 +96,7 @@ BEGIN TRY
 
 	CREATE TABLE CRISPI.Oferta( 
 		oferta_id int IDENTITY(1,1) PRIMARY KEY,
-		oferta_codigo decimal(18,0) NOT NULL,
+		oferta_codigo nvarchar(50) NOT NULL,
 		oferta_descripcion nvarchar(255) NOT NULL,
 		oferta_precio numeric(18,2) NOT NULL,
 		oferta_lista numeric(18,2) NOT NULL,
@@ -132,9 +132,11 @@ BEGIN TRY
 
 	CREATE TABLE CRISPI.Cupones(
 		cupones_id int IDENTITY(1,1) PRIMARY KEY,
-		cupones_estado_id int NOT NULL,
+		cupones_oferta_id int NOT NULL,
+		cupones_precio_oferta numeric(18,2) NOT NULL,
+		cupones_precio_lista numeric(18,2) NOT NULL,
 		cupones_cliente_id int NOT NULL,
-		cupones_oferta_id int NOT NULL
+		cupones_estado_id int NOT NULL,		
 	)
 
 	CREATE TABLE CRISPI.Historial_cupones(
@@ -223,15 +225,15 @@ BEGIN TRY
 	
 	
 	INSERT INTO CRISPI.Usuario(usuario_username,usuario_password,usuario_proveedor_id,usuario_cliente_id,usuario_habilitado,usuario_estado,usuario_cantidad_errores)
-	VALUES ('admin', HASHBYTES('SHA2_256', CONVERT(nvarchar(50), 'w23e')),NULL,NULL,1,1,0)
+	VALUES ('admin', HASHBYTES('SHA2_256', CONVERT(nvarchar(50), 'w23e')),NULL,NULL,1,1,0);
 
 	PRINT 'Creando roles'
 	INSERT INTO CRISPI.Rol (rol_nombre, rol_estado)
 	VALUES('Administrador', 1),
 		('Usuario', 1),
-		('Proveedor',1)
+		('Proveedor',1);
 	PRINT 'Roles creados correctamente'
-	GO
+
 
 	PRINT 'Creando funcionalidades'
 	INSERT INTO CRISPI.Funcionalidad (funcionalidad_descripcion)
@@ -243,48 +245,51 @@ BEGIN TRY
 		('MODIFICACION_OFERTA'),
 		('VISUALIZACION_CLIENTES'),
 		('VISUALIZACION_PROVEEDORES'),
-		('VISUALIZACION_LISTADO_ESTADISTICO')
+		('VISUALIZACION_LISTADO_ESTADISTICO');
 	PRINT 'Funcionalidades creadas correctamente'
-	GO
+
 
 	PRINT 'Asignando funcionalidad a los roles'
 	INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-	SELECT 1, funcionalidad_id FROM CRISPI.Funcionalidad
+	(SELECT 1, funcionalidad_id FROM CRISPI.Funcionalidad);
 	PRINT 'Funcionalidades asignadas a los roles correctamente'
-	GO
+
 
 	PRINT 'Migracion de ciudades'
 	INSERT INTO CRISPI.Ciudad(ciudad_nombre)
-	SELECT DISTINCT Cli_Ciudad
+	(SELECT Cli_Ciudad
 	FROM gd_esquema.Maestra
 	WHERE Cli_Ciudad IS NOT NULL
+	group by Cli_Ciudad);
 	PRINT 'Ciudades migrados correctamente'
-	GO
+
 
 	PRINT 'Migracion de rubro'
 	INSERT INTO CRISPI.Rubro(rubro_nombre)
-	SELECT DISTINCT Provee_Rubro
+	(SELECT Provee_Rubro
 	FROM gd_esquema.Maestra
 	WHERE Provee_Rubro IS NOT NULL
+	group by Provee_Rubro);
 	PRINT 'Rubro migrados correctamente'
-	GO
+
 
 	PRINT 'Migracion de tipo_pago'
-	INSERT INTO CRISPI.Tipo_pago(tipo_nombre)
-	SELECT DISTINCT Tipo_Pago_Desc
+	INSERT INTO CRISPI.Tipo_pago(tipo_pago_nombre)
+	(SELECT Tipo_Pago_Desc
 	FROM gd_esquema.Maestra
 	WHERE Tipo_Pago_Desc IS NOT NULL
+	group by Tipo_Pago_Desc);
 	PRINT 'Tipos de pago migrados correctamente'
-	GO
+
 
 	PRINT 'Migracion de clientes'
 	INSERT INTO CRISPI.Cliente(cliente_apellido,cliente_nombre,cliente_dni,cliente_fechanac,cliente_direccion,cliente_mail,cliente_telefono,cliente_ciudad_id,cliente_credito)
-	SELECT Cli_Apellido,Cli_Nombre, Cli_Dni,Cli_Fecha_Nac,Cli_Direccion,Cli_Mail,Cli_Telefono,a.ciudad_id,SUM(ISNULL(Carga_Credito,0))
+	(SELECT Cli_Apellido,Cli_Nombre, Cli_Dni,Cli_Fecha_Nac,Cli_Direccion,Cli_Mail,Cli_Telefono,a.ciudad_id,SUM(ISNULL(Carga_Credito,0))
 	FROM gd_esquema.Maestra m,CRISPI.Ciudad a
 	WHERE m.Cli_Dni IS NOT NULL AND m.Cli_Ciudad = a.ciudad_nombre
-	GROUP BY Cli_Apellido,Cli_Nombre, Cli_Dni,Cli_Fecha_Nac,Cli_Direccion,Cli_Mail,Cli_Telefono,a.ciudad_id
+	GROUP BY Cli_Apellido,Cli_Nombre, Cli_Dni,Cli_Fecha_Nac,Cli_Direccion,Cli_Mail,Cli_Telefono,a.ciudad_id);
 	PRINT 'Clientes migrados correctamente'
-	GO
+
 
 	PRINT 'Migracion de  Proveedores'
 	INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_dom,proveedor_rs,proveedor_telefono,proveedor_ciudad_id,proveedor_estado)
@@ -292,7 +297,7 @@ BEGIN TRY
 	FROM gd_esquema.Maestra m ,CRISPI.Ciudad a
 	WHERE m.Provee_CUIT IS NOT NULL AND m.Provee_Ciudad=a.ciudad_nombre
 	PRINT 'Proveedores migrados correctamente'
-	GO
+
 
 	PRINT 'Migracion Rubro Proveedor'
 	INSERT INTO CRISPI.Rubro_Proveedor(rubro_proveedor,rubro_id)
@@ -300,25 +305,67 @@ BEGIN TRY
 	FROM gd_esquema.Maestra m,CRISPI.Proveedor a,CRISPI.Rubro r
 	WHERE m.Provee_CUIT IS NOT NULL AND m.Provee_CUIT=a.proveedor_cuit AND m.Provee_Rubro=r.rubro_nombre
 	PRINT 'Rubro Proveedor migrados correctamente'
-	GO
+
 
 	PRINT 'Migracion Credito'
 	INSERT INTO CRISPI.Credito(credito_fecha,credito_monto,credito_cliente_id,credito_tipo_pago_id)
-	SELECT DISTINCT Carga_Fecha,Carga_Credito,r.cliente_id,a.tipo_id
-	FROM gd_esquema.Maestra m,CRISPI.TIPO a,CRISPI.Cliente r
-	WHERE m.Carga_Credito IS NOT NULL AND m.Tipo_Pago_Desc=a.tipo_nombre AND m.Cli_Dni=r.cliente_dni
+	SELECT DISTINCT Carga_Fecha,Carga_Credito,r.cliente_id,a.tipo_pago_id
+	FROM gd_esquema.Maestra m,CRISPI.Tipo_pago a,CRISPI.Cliente r
+	WHERE m.Carga_Credito IS NOT NULL AND m.Tipo_Pago_Desc=a.tipo_pago_nombre AND m.Cli_Dni=r.cliente_dni
 	PRINT 'Credito migrados correctamente'
-	GO
-		
-	COMMIT TRANSACTION
+
+	
+	PRINT 'Migracion oferta'
+	INSERT INTO CRISPI.Oferta(oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_proveedor_id)
+	SELECT Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,1,Oferta_Fecha,Oferta_Fecha_Venc,p.proveedor_id
+	FROM gd_esquema.Maestra m
+	join CRISPI.Proveedor p on p.proveedor_cuit = m.Provee_CUIT
+	where m.Oferta_Codigo is not null
+	group by Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,Oferta_Fecha,Oferta_Fecha_Venc,p.proveedor_id
+	PRINT 'oferta migrados correctamente'
+
+
+	PRINT 'Migracion facturacion'
+	INSERT INTO CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_fecha,facturacion_monto,facturacion_proveedor_id)
+	SELECT m.Factura_Nro,'A',m.Factura_Fecha,sum(Oferta_Precio),a.proveedor_id
+	FROM gd_esquema.Maestra m,CRISPI.Proveedor a
+	where m.Factura_Nro is not null and m.Provee_CUIT=a.proveedor_cuit
+	group by m.Factura_Nro,m.Factura_Fecha,a.proveedor_id
+	PRINT 'Rubro Proveedor migrados correctamente'
+
+
+	PRINT 'Migracion item facturacion'
+	INSERT INTO CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id)
+	select a.facturacion_id,c.cliente_id,o.oferta_id
+	from gd_esquema.Maestra m,CRISPI.Facturacion a,CRISPI.Cliente c,CRISPI.Oferta o
+	where m.Factura_Nro is not null and m.Factura_Nro=a.facturacion_nro and m.Cli_Dni=c.cliente_dni and m.Oferta_Codigo=o.oferta_codigo
+	PRINT ' migrados correctamente'
+	
+	PRINT 'Estados Cupones'
+	INSERT INTO CRISPI.Estado(estado_descripcion)
+	VALUES('Disponible'),
+		  ('Vencido'),
+		  ('Cancelado')
+	PRINT 'migrados correctamente'
+
+
+	PRINT 'Migracion cupones'
+	INSERT INTO CRISPI.Cupones(cupones_oferta_id,cupones_precio_oferta,cupones_precio_lista,cupones_cliente_id,cupones_estado_id)
+	select distinct o.oferta_id,m.Oferta_Precio,m.Oferta_Precio_Ficticio,c.cliente_id,1
+	from gd_esquema.Maestra m,CRISPI.Oferta o,CRISPI.Cliente c
+	where m.Factura_Nro is not null and m.Oferta_Codigo=o.oferta_codigo and m.Cli_Dni=c.cliente_dni
+	PRINT 'migrados correctamente'	
+
+	commit
 END TRY
-BEGIN CATCH
-	SELECT ERROR_NUMBER() AS errNumber,
-		   ERROR_SEVERITY() AS errSeverity,
-		   ERROR_STATE() AS errState,
-		   ERROR_PROCEDURE() AS errProcedure,
-		   ERROR_LINE() AS errLine,
-		   ERROR_MESSAGE() AS errMessage
-    ROLLBACK TRANSACTION
+BEGIN CATCH	
+	SELECT  
+        ERROR_NUMBER() AS ErrorNumber  
+        ,ERROR_SEVERITY() AS ErrorSeverity  
+        ,ERROR_STATE() AS ErrorState  
+        ,ERROR_PROCEDURE() AS ErrorProcedure  
+        ,ERROR_LINE() AS ErrorLine  
+        ,ERROR_MESSAGE() AS ErrorMessage; 
+	rollback    
 END CATCH
 

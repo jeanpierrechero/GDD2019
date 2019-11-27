@@ -21,7 +21,7 @@ namespace FrbaOfertas.AbmProveedor
         {
             try
             {
-                string instruccion = string.Format("EXEC  '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'", razonsocial.Text.Trim(), usuario.Text.Trim(), contraseña.Text.Trim(), cuit.Text.Trim(), proveedor.Text.Trim(), ciudad.Text.Trim(), telefono.Text.Trim(), mail.Text.Trim());
+                string instruccion = string.Format("EXEC CRISPI.proc_create_usuario_proveedor  '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'", razonsocial.Text.Trim(), usuario.Text.Trim(), contraseña.Text.Trim(), cuit.Text.Trim(), direccion.Text.Trim(), ciudad.Text.Trim(), telefono.Text.Trim(), mail.Text.Trim());
                 utilidades.ejecutar(instruccion);
                 MessageBox.Show("guardado");
             }
