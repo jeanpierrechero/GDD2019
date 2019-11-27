@@ -1,4 +1,4 @@
-﻿namespace FrbaOfertas.ComprarOferta
+﻿namespace FrbaOfertas.CrearOferta
 {
     partial class Form1
     {

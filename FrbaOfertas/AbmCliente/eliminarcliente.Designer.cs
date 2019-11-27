@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.eliminar = new System.Windows.Forms.Button();
-            this.numero = new System.Windows.Forms.TextBox();
-            this.cliente = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.numero = new conexionsql.errorbox();
+            this.cliente = new conexionsql.errorbox();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // eliminar
@@ -44,20 +47,6 @@
             this.eliminar.Text = "eliminar";
             this.eliminar.UseVisualStyleBackColor = true;
             this.eliminar.Click += new System.EventHandler(this.eliminar_Click);
-            // 
-            // numero
-            // 
-            this.numero.Location = new System.Drawing.Point(290, 93);
-            this.numero.Name = "numero";
-            this.numero.Size = new System.Drawing.Size(186, 22);
-            this.numero.TabIndex = 8;
-            // 
-            // cliente
-            // 
-            this.cliente.Location = new System.Drawing.Point(290, 49);
-            this.cliente.Name = "cliente";
-            this.cliente.Size = new System.Drawing.Size(186, 22);
-            this.cliente.TabIndex = 7;
             // 
             // label2
             // 
@@ -77,18 +66,41 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "cliente";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // numero
+            // 
+            this.numero.chequear = true;
+            this.numero.Location = new System.Drawing.Point(290, 93);
+            this.numero.Name = "numero";
+            this.numero.Size = new System.Drawing.Size(186, 22);
+            this.numero.TabIndex = 11;
+            this.numero.TextChanged += new System.EventHandler(this.numero_TextChanged);
+            // 
+            // cliente
+            // 
+            this.cliente.chequear = true;
+            this.cliente.Location = new System.Drawing.Point(290, 44);
+            this.cliente.Name = "cliente";
+            this.cliente.Size = new System.Drawing.Size(186, 22);
+            this.cliente.TabIndex = 10;
+            this.cliente.TextChanged += new System.EventHandler(this.cliente_TextChanged);
+            // 
             // eliminarcliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(574, 297);
-            this.Controls.Add(this.eliminar);
             this.Controls.Add(this.numero);
             this.Controls.Add(this.cliente);
+            this.Controls.Add(this.eliminar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "eliminarcliente";
             this.Text = "eliminarcliente";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,9 +109,10 @@
         #endregion
 
         private System.Windows.Forms.Button eliminar;
-        private System.Windows.Forms.TextBox numero;
-        private System.Windows.Forms.TextBox cliente;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private conexionsql.errorbox cliente;
+        private conexionsql.errorbox numero;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

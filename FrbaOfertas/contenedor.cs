@@ -130,5 +130,17 @@ namespace FrbaOfertas
             proveedor.Show();
 
         }
+
+        private void ofertasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ComprarOferta.ofertas ofertanueva = new ComprarOferta.ofertas();
+            ofertanueva.MdiParent = this;
+            ofertanueva.Show();
+        }
+
+        private void contenedor_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

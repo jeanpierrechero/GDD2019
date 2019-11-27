@@ -30,5 +30,10 @@ namespace FrbaOfertas.AbmProveedor
                 MessageBox.Show("ocurrio error");
             }
         }
+
+        private void nuevoproveedor_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

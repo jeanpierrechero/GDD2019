@@ -55,22 +55,24 @@
             // 
             // iniciar
             // 
+            this.iniciar.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.iniciar.Location = new System.Drawing.Point(66, 279);
             this.iniciar.Name = "iniciar";
             this.iniciar.Size = new System.Drawing.Size(129, 23);
             this.iniciar.TabIndex = 2;
             this.iniciar.Text = "iniciar";
-            this.iniciar.UseVisualStyleBackColor = true;
+            this.iniciar.UseVisualStyleBackColor = false;
             this.iniciar.Click += new System.EventHandler(this.iniciar_Click);
             // 
             // salir
             // 
+            this.salir.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.salir.Location = new System.Drawing.Point(273, 279);
             this.salir.Name = "salir";
             this.salir.Size = new System.Drawing.Size(129, 23);
             this.salir.TabIndex = 3;
             this.salir.Text = "salir";
-            this.salir.UseVisualStyleBackColor = true;
+            this.salir.UseVisualStyleBackColor = false;
             // 
             // tusuario
             // 
@@ -100,6 +102,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Highlight;
             this.ClientSize = new System.Drawing.Size(564, 407);
             this.Controls.Add(this.cadministrador);
             this.Controls.Add(this.tcontraseña);

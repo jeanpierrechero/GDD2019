@@ -7,3 +7,13 @@ C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas
 C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.GenerateResource.cache
 C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.exe
 C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.pdb
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\bin\Debug\conexionsql.dll
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\bin\Debug\conexionsql.pdb
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.eliminarcliente.resources
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.nuevo.resources
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.eliminarproveedor.resources
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.nuevoproveedor.resources
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.ofertas.resources
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.login.resources
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.contenedor.resources
+C:\Users\omar coca mariscal\Desktop\tp\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.CopyComplete

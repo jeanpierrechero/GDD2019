@@ -209,6 +209,7 @@
             this.Controls.Add(this.label1);
             this.Name = "nuevoproveedor";
             this.Text = "nuevoproveedor";
+            this.Load += new System.EventHandler(this.nuevoproveedor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

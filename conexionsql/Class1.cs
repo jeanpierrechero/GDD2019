@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Windows.Forms;
 namespace conexionsql
 {
     public class utilidades
@@ -20,6 +20,26 @@ namespace conexionsql
             conexion.Close();
             return a;
 
+        }
+        public static Boolean chequearformulario(Control objeto,ErrorProvider errorprovider)
+        {
+            Boolean errores = false;
+            foreach(Control item in objeto.Controls)
+            {
+                if(item is errorbox)
+                {
+                    errorbox a = (errorbox)item;
+                    if (a.chequear == true)
+                    {
+                        if (string.IsNullOrEmpty(a.Text.Trim()))
+                        {
+                            errorprovider.SetError(a, "completar");
+                            errores = true;
+                        }
+                    }
+                }
+            }
+            return errores;
         }
     }
 }

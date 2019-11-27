@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.proveedoreliminar = new System.Windows.Forms.TextBox();
-            this.proveedor = new System.Windows.Forms.TextBox();
             this.eliminar = new System.Windows.Forms.Button();
+            this.proveedoreliminar = new conexionsql.errorbox();
+            this.numero = new conexionsql.errorbox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -53,20 +56,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "codigo";
             // 
-            // proveedoreliminar
-            // 
-            this.proveedoreliminar.Location = new System.Drawing.Point(271, 32);
-            this.proveedoreliminar.Name = "proveedoreliminar";
-            this.proveedoreliminar.Size = new System.Drawing.Size(186, 22);
-            this.proveedoreliminar.TabIndex = 2;
-            // 
-            // proveedor
-            // 
-            this.proveedor.Location = new System.Drawing.Point(271, 76);
-            this.proveedor.Name = "proveedor";
-            this.proveedor.Size = new System.Drawing.Size(186, 22);
-            this.proveedor.TabIndex = 3;
-            // 
             // eliminar
             // 
             this.eliminar.Location = new System.Drawing.Point(73, 134);
@@ -77,18 +66,42 @@
             this.eliminar.UseVisualStyleBackColor = true;
             this.eliminar.Click += new System.EventHandler(this.eliminar_Click);
             // 
+            // proveedoreliminar
+            // 
+            this.proveedoreliminar.chequear = false;
+            this.proveedoreliminar.Location = new System.Drawing.Point(271, 27);
+            this.proveedoreliminar.Name = "proveedoreliminar";
+            this.proveedoreliminar.Size = new System.Drawing.Size(186, 22);
+            this.proveedoreliminar.TabIndex = 5;
+            this.proveedoreliminar.TextChanged += new System.EventHandler(this.proveedoreliminar_TextChanged);
+            // 
+            // numero
+            // 
+            this.numero.chequear = false;
+            this.numero.Location = new System.Drawing.Point(271, 78);
+            this.numero.Name = "numero";
+            this.numero.Size = new System.Drawing.Size(186, 22);
+            this.numero.TabIndex = 6;
+            this.numero.TextChanged += new System.EventHandler(this.numero_TextChanged);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // eliminarproveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(570, 283);
-            this.Controls.Add(this.eliminar);
-            this.Controls.Add(this.proveedor);
+            this.Controls.Add(this.numero);
             this.Controls.Add(this.proveedoreliminar);
+            this.Controls.Add(this.eliminar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "eliminarproveedor";
             this.Text = "eliminarproveedor";
+            this.Load += new System.EventHandler(this.eliminarproveedor_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -98,8 +111,9 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox proveedoreliminar;
-        private System.Windows.Forms.TextBox proveedor;
         private System.Windows.Forms.Button eliminar;
+        private conexionsql.errorbox proveedoreliminar;
+        private conexionsql.errorbox numero;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

@@ -244,7 +244,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 683);
+            this.ClientSize = new System.Drawing.Size(797, 683);
             this.Controls.Add(this.agregarnuevo);
             this.Controls.Add(this.nuevomail);
             this.Controls.Add(this.nuevotelefono);
