@@ -104,6 +104,12 @@
     <Compile Include="AbmRol\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComprarOferta\mostrarofertas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOferta\mostrarofertas.Designer.cs">
+      <DependentUpon>mostrarofertas.cs</DependentUpon>
+    </Compile>
     <Compile Include="CrearOferta\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmProveedor\nuevoproveedor.resx">
       <DependentUpon>nuevoproveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOferta\mostrarofertas.resx">
+      <DependentUpon>mostrarofertas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\ofertas.resx">
       <DependentUpon>ofertas.cs</DependentUpon>

@@ -142,5 +142,12 @@ namespace FrbaOfertas
         {
 
         }
+
+        private void facturacionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ComprarOferta.mostrarofertas a = new ComprarOferta.mostrarofertas();
+            a.MdiParent = this;
+            a.Show();
+        }
     }
 }
