@@ -31,7 +31,6 @@
             this.agregarnuevo = new System.Windows.Forms.Button();
             this.mail = new System.Windows.Forms.TextBox();
             this.telefono = new System.Windows.Forms.TextBox();
-            this.ciudad = new System.Windows.Forms.TextBox();
             this.direccion = new System.Windows.Forms.TextBox();
             this.cuit = new System.Windows.Forms.TextBox();
             this.contraseña = new System.Windows.Forms.TextBox();
@@ -45,12 +44,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.ciudad = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // agregarnuevo
             // 
             this.agregarnuevo.Location = new System.Drawing.Point(94, 369);
-            this.agregarnuevo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.agregarnuevo.Margin = new System.Windows.Forms.Padding(2);
             this.agregarnuevo.Name = "agregarnuevo";
             this.agregarnuevo.Size = new System.Drawing.Size(116, 29);
             this.agregarnuevo.TabIndex = 45;
@@ -61,7 +61,7 @@
             // mail
             // 
             this.mail.Location = new System.Drawing.Point(299, 299);
-            this.mail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.mail.Margin = new System.Windows.Forms.Padding(2);
             this.mail.Name = "mail";
             this.mail.Size = new System.Drawing.Size(211, 20);
             this.mail.TabIndex = 41;
@@ -69,23 +69,15 @@
             // telefono
             // 
             this.telefono.Location = new System.Drawing.Point(299, 262);
-            this.telefono.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.telefono.Margin = new System.Windows.Forms.Padding(2);
             this.telefono.Name = "telefono";
             this.telefono.Size = new System.Drawing.Size(211, 20);
             this.telefono.TabIndex = 40;
             // 
-            // ciudad
-            // 
-            this.ciudad.Location = new System.Drawing.Point(299, 227);
-            this.ciudad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.ciudad.Name = "ciudad";
-            this.ciudad.Size = new System.Drawing.Size(211, 20);
-            this.ciudad.TabIndex = 39;
-            // 
             // direccion
             // 
             this.direccion.Location = new System.Drawing.Point(299, 188);
-            this.direccion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.direccion.Margin = new System.Windows.Forms.Padding(2);
             this.direccion.Name = "direccion";
             this.direccion.Size = new System.Drawing.Size(211, 20);
             this.direccion.TabIndex = 38;
@@ -93,7 +85,7 @@
             // cuit
             // 
             this.cuit.Location = new System.Drawing.Point(299, 141);
-            this.cuit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cuit.Margin = new System.Windows.Forms.Padding(2);
             this.cuit.Name = "cuit";
             this.cuit.Size = new System.Drawing.Size(211, 20);
             this.cuit.TabIndex = 37;
@@ -101,7 +93,7 @@
             // contraseña
             // 
             this.contraseña.Location = new System.Drawing.Point(299, 97);
-            this.contraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.contraseña.Margin = new System.Windows.Forms.Padding(2);
             this.contraseña.Name = "contraseña";
             this.contraseña.Size = new System.Drawing.Size(211, 20);
             this.contraseña.TabIndex = 36;
@@ -109,7 +101,7 @@
             // usuario
             // 
             this.usuario.Location = new System.Drawing.Point(299, 54);
-            this.usuario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.usuario.Margin = new System.Windows.Forms.Padding(2);
             this.usuario.Name = "usuario";
             this.usuario.Size = new System.Drawing.Size(211, 20);
             this.usuario.TabIndex = 35;
@@ -117,7 +109,7 @@
             // razonsocial
             // 
             this.razonsocial.Location = new System.Drawing.Point(299, 19);
-            this.razonsocial.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.razonsocial.Margin = new System.Windows.Forms.Padding(2);
             this.razonsocial.Name = "razonsocial";
             this.razonsocial.Size = new System.Drawing.Size(211, 20);
             this.razonsocial.TabIndex = 34;
@@ -202,15 +194,23 @@
             this.label1.TabIndex = 23;
             this.label1.Text = "razon social";
             // 
+            // ciudad
+            // 
+            this.ciudad.FormattingEnabled = true;
+            this.ciudad.Location = new System.Drawing.Point(299, 222);
+            this.ciudad.Name = "ciudad";
+            this.ciudad.Size = new System.Drawing.Size(211, 21);
+            this.ciudad.TabIndex = 46;
+            // 
             // nuevoproveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 444);
+            this.Controls.Add(this.ciudad);
             this.Controls.Add(this.agregarnuevo);
             this.Controls.Add(this.mail);
             this.Controls.Add(this.telefono);
-            this.Controls.Add(this.ciudad);
             this.Controls.Add(this.direccion);
             this.Controls.Add(this.cuit);
             this.Controls.Add(this.contraseña);
@@ -224,7 +224,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "nuevoproveedor";
             this.Text = "nuevoproveedor";
             this.Load += new System.EventHandler(this.nuevoproveedor_Load);
@@ -238,7 +238,6 @@
         private System.Windows.Forms.Button agregarnuevo;
         private System.Windows.Forms.TextBox mail;
         private System.Windows.Forms.TextBox telefono;
-        private System.Windows.Forms.TextBox ciudad;
         private System.Windows.Forms.TextBox direccion;
         private System.Windows.Forms.TextBox cuit;
         private System.Windows.Forms.TextBox contraseña;
@@ -252,5 +251,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox ciudad;
     }
 }
