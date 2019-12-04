@@ -29,11 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.agragar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ofertasagregadas = new System.Windows.Forms.DataGridView();
+            this.codigocolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcioncolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.preciocolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidadcolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.importecolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttoncomprar = new System.Windows.Forms.Button();
             this.ofertas = new System.Windows.Forms.ComboBox();
             this.eliminar = new System.Windows.Forms.Button();
@@ -46,11 +51,6 @@
             this.codigo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cantidad = new conexionsql.errorbox();
-            this.codigocolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcioncolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.preciocolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidadcolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.importecolumna = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.total1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.ofertasagregadas)).BeginInit();
@@ -106,20 +106,60 @@
             this.ofertasagregadas.Location = new System.Drawing.Point(64, 146);
             this.ofertasagregadas.Name = "ofertasagregadas";
             this.ofertasagregadas.ReadOnly = true;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ofertasagregadas.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ofertasagregadas.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.ofertasagregadas.RowHeadersVisible = false;
             this.ofertasagregadas.RowHeadersWidth = 51;
             this.ofertasagregadas.RowTemplate.Height = 24;
             this.ofertasagregadas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ofertasagregadas.Size = new System.Drawing.Size(759, 297);
             this.ofertasagregadas.TabIndex = 3;
+            // 
+            // codigocolumna
+            // 
+            this.codigocolumna.HeaderText = "codigo";
+            this.codigocolumna.MinimumWidth = 6;
+            this.codigocolumna.Name = "codigocolumna";
+            this.codigocolumna.ReadOnly = true;
+            this.codigocolumna.Width = 125;
+            // 
+            // descripcioncolumna
+            // 
+            this.descripcioncolumna.HeaderText = "descripcion";
+            this.descripcioncolumna.MinimumWidth = 6;
+            this.descripcioncolumna.Name = "descripcioncolumna";
+            this.descripcioncolumna.ReadOnly = true;
+            this.descripcioncolumna.Width = 300;
+            // 
+            // preciocolumna
+            // 
+            this.preciocolumna.HeaderText = "precio";
+            this.preciocolumna.MinimumWidth = 6;
+            this.preciocolumna.Name = "preciocolumna";
+            this.preciocolumna.ReadOnly = true;
+            this.preciocolumna.Width = 110;
+            // 
+            // cantidadcolumna
+            // 
+            this.cantidadcolumna.HeaderText = "cantidad";
+            this.cantidadcolumna.MinimumWidth = 6;
+            this.cantidadcolumna.Name = "cantidadcolumna";
+            this.cantidadcolumna.ReadOnly = true;
+            this.cantidadcolumna.Width = 110;
+            // 
+            // importecolumna
+            // 
+            this.importecolumna.HeaderText = "importe";
+            this.importecolumna.MinimumWidth = 6;
+            this.importecolumna.Name = "importecolumna";
+            this.importecolumna.ReadOnly = true;
+            this.importecolumna.Width = 110;
             // 
             // buttoncomprar
             // 
@@ -163,9 +203,9 @@
             // 
             this.mostrar.BackColor = System.Drawing.Color.Green;
             this.mostrar.ForeColor = System.Drawing.Color.White;
-            this.mostrar.Location = new System.Drawing.Point(485, 23);
+            this.mostrar.Location = new System.Drawing.Point(488, 8);
             this.mostrar.Name = "mostrar";
-            this.mostrar.Size = new System.Drawing.Size(75, 23);
+            this.mostrar.Size = new System.Drawing.Size(75, 39);
             this.mostrar.TabIndex = 11;
             this.mostrar.Text = "mostrar";
             this.mostrar.UseVisualStyleBackColor = false;
@@ -226,46 +266,6 @@
             this.cantidad.Name = "cantidad";
             this.cantidad.Size = new System.Drawing.Size(100, 22);
             this.cantidad.TabIndex = 17;
-            // 
-            // codigocolumna
-            // 
-            this.codigocolumna.HeaderText = "codigo";
-            this.codigocolumna.MinimumWidth = 6;
-            this.codigocolumna.Name = "codigocolumna";
-            this.codigocolumna.ReadOnly = true;
-            this.codigocolumna.Width = 125;
-            // 
-            // descripcioncolumna
-            // 
-            this.descripcioncolumna.HeaderText = "descripcion";
-            this.descripcioncolumna.MinimumWidth = 6;
-            this.descripcioncolumna.Name = "descripcioncolumna";
-            this.descripcioncolumna.ReadOnly = true;
-            this.descripcioncolumna.Width = 300;
-            // 
-            // preciocolumna
-            // 
-            this.preciocolumna.HeaderText = "precio";
-            this.preciocolumna.MinimumWidth = 6;
-            this.preciocolumna.Name = "preciocolumna";
-            this.preciocolumna.ReadOnly = true;
-            this.preciocolumna.Width = 110;
-            // 
-            // cantidadcolumna
-            // 
-            this.cantidadcolumna.HeaderText = "cantidad";
-            this.cantidadcolumna.MinimumWidth = 6;
-            this.cantidadcolumna.Name = "cantidadcolumna";
-            this.cantidadcolumna.ReadOnly = true;
-            this.cantidadcolumna.Width = 110;
-            // 
-            // importecolumna
-            // 
-            this.importecolumna.HeaderText = "importe";
-            this.importecolumna.MinimumWidth = 6;
-            this.importecolumna.Name = "importecolumna";
-            this.importecolumna.ReadOnly = true;
-            this.importecolumna.Width = 110;
             // 
             // label6
             // 

@@ -143,11 +143,28 @@ namespace FrbaOfertas
 
         }
 
+
         private void facturacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ComprarOferta.mostrarofertas a = new ComprarOferta.mostrarofertas();
             a.MdiParent = this;
             a.Show();
         }
+
+        private void listadoClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbmCliente.listado listado = new AbmCliente.listado();
+            listado.MdiParent = this;
+            listado.Show();
+        }
+
+        private void listadoProveedorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbmProveedor.listado listado = new AbmProveedor.listado();
+            listado.MdiParent = this;
+            listado.Show();
+
+        }
+
     }
 }

@@ -27,14 +27,13 @@ namespace FrbaOfertas
 
         private void iniciar_Click(object sender, EventArgs e)
         {
+            int valor = 0;
             try
             {
-                string a = string.Format("select * from usuario where usuario_username='{0}' and usuario_password='{1}'", usuario.Text.Trim(), contraseña.Text.Trim());
+                string a = string.Format("select CRISPI.func_login('{0}','{1}')", tusuario.Text.Trim(), tcontraseña.Text.Trim());
                 DataSet m = utilidades.ejecutar(a);
-                string cuenta = m.Tables[0].Rows[0]["usuario"].ToString().Trim();
-                string c = m.Tables[0].Rows[0]["contraseña"].ToString().Trim();
-                u = m.Tables[0].Rows[0]["usuario_id"].ToString().Trim();
-                if (cuenta == usuario.Text.Trim() && c == contraseña.Text.Trim())
+                valor = Convert.ToInt32(m.Tables[0].Rows[0][0].ToString());
+                if (valor == 1)
                 {
                  
                     if (Convert.ToBoolean(cadministrador.Checked))
@@ -45,13 +44,11 @@ namespace FrbaOfertas
                     }
                     else
                     {
-                        contenedor u = new contenedor();
+                        contenedor u2 = new contenedor();
                         this.Hide();
-                        u.Show();
+                        u2.Show();
                     }
-                   
                 }
-
 
 
             }
