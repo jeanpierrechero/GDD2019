@@ -1,4 +1,4 @@
-create or alter FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
+create function CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
 RETURNS int
 AS 
 BEGIN
@@ -19,6 +19,27 @@ BEGIN
 END
 GO
 
+
+create function CRISPI.hasPermission (@name_rol nvarchar(50),@name_permission nvarchar(50))
+RETURNS bit
+AS 
+BEGIN
+	Declare @rol_id int;
+	Declare @funcionalidad_id int;
+	
+	select @rol_id = rol_id from CRISPI.Rol where rol_nombre = @name_rol and rol_estado = 1;
+	
+	select @funcionalidad_id = funcionalidad_id from CRISPI.Funcionalidad where funcionalidad_descripcion = @name_permission;
+
+	IF EXISTS(select 1 from CRISPI.Rol_Por_Funcionalidad where rol_id = @rol_id and funcionalidad_id = @funcionalidad_id)
+	begin
+		RETURN 1
+	end
+	
+	RETURN 0
+
+END
+GO
 
 
 create or alter procedure CRISPI.proc_create_usuario_cliente
@@ -87,6 +108,38 @@ end catch
 GO
 
 
+create or alter procedure CRISPI.proc_update_cliente
+	@nombre nvarchar(255),
+	@apellido nvarchar(255),
+	@dni numeric(18,0),
+	@fecha_nacimiento datetime,
+	@direccion nvarchar(255),
+	@ciudad_nombre nvarchar(255),
+	@mail nvarchar(255),
+	@telefono numeric(18,0),
+	@codigo_postal int,
+	@id int
+
+as
+begin try
+	begin transaction
+	
+	Declare @ciudad_id int;
+	
+	set @ciudad_id = (select top 1 ciudad_id from CRISPI.Ciudad where ciudad_nombre = @ciudad_nombre);
+		
+	update CRISPI.Cliente set cliente_nombre=@nombre,cliente_apellido=@apellido,cliente_dni=@dni,cliente_mail=@mail,cliente_telefono=@telefono,
+								cliente_direccion=@direccion,cliente_fechanac = @fecha_nacimiento,cliente_ciudad_id=@ciudad_id,cliente_codigo_postal=@codigo_postal
+	where cliente_id = @id
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+end catch
+GO
+
+
 
 
 create or alter procedure CRISPI.proc_create_usuario_proveedor
@@ -142,6 +195,51 @@ begin try
 	
 	commit transaction
 	return @id;
+end try
+begin catch
+	rollback transaction
+    THROW;
+end catch
+GO
+
+create or alter procedure CRISPI.proc_update_proveedor
+	@cuit nvarchar(20),
+	@razon_social nvarchar(100),
+	@direccion nvarchar(255),
+	@mail nvarchar(255),
+	@ciudad_nombre nvarchar(255),
+	@telefono numeric(18,0),
+	@id int
+as
+begin try
+	begin transaction
+	
+	Declare @ciudad_id int;
+	
+	set @ciudad_id = (select top 1 ciudad_id from CRISPI.Ciudad where ciudad_nombre = @ciudad_nombre);
+	
+	update CRISPI.Proveedor set proveedor_cuit = @cuit,proveedor_rs=@razon_social,proveedor_dom=@direccion,
+		proveedor_mail=@mail,proveedor_ciudad_id=@ciudad_id,proveedor_telefono=@telefono
+	where proveedor_id = @id;
+	
+	commit transaction
+end try
+begin catch
+	rollback transaction
+    THROW;
+end catch
+GO
+
+
+create procedure CRISPI.proc_insert_rol_proveedor(@rubro_id int,@proveedor_id int)
+as
+begin try
+	begin transaction
+	
+	INSERT INTO CRISPI.Rubro_Proveedor(rubro_id,rubro_proveedor)
+	VALUES(@rubro_id,@proveedor_id);
+	
+	commit transaction
 end try
 begin catch
 	rollback transaction

@@ -39,26 +39,29 @@
             // 
             // usuario
             // 
-            this.usuario.Location = new System.Drawing.Point(63, 48);
+            this.usuario.Location = new System.Drawing.Point(47, 39);
+            this.usuario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.usuario.Name = "usuario";
-            this.usuario.Size = new System.Drawing.Size(100, 23);
+            this.usuario.Size = new System.Drawing.Size(75, 19);
             this.usuario.TabIndex = 0;
             this.usuario.Text = "usuario";
             // 
             // contraseña
             // 
-            this.contraseña.Location = new System.Drawing.Point(63, 111);
+            this.contraseña.Location = new System.Drawing.Point(47, 90);
+            this.contraseña.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.contraseña.Name = "contraseña";
-            this.contraseña.Size = new System.Drawing.Size(100, 23);
+            this.contraseña.Size = new System.Drawing.Size(75, 19);
             this.contraseña.TabIndex = 1;
             this.contraseña.Text = "contraseña";
             // 
             // iniciar
             // 
             this.iniciar.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.iniciar.Location = new System.Drawing.Point(66, 279);
+            this.iniciar.Location = new System.Drawing.Point(50, 227);
+            this.iniciar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.iniciar.Name = "iniciar";
-            this.iniciar.Size = new System.Drawing.Size(129, 23);
+            this.iniciar.Size = new System.Drawing.Size(97, 19);
             this.iniciar.TabIndex = 2;
             this.iniciar.Text = "iniciar";
             this.iniciar.UseVisualStyleBackColor = false;
@@ -67,43 +70,48 @@
             // salir
             // 
             this.salir.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.salir.Location = new System.Drawing.Point(273, 279);
+            this.salir.Location = new System.Drawing.Point(205, 227);
+            this.salir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.salir.Name = "salir";
-            this.salir.Size = new System.Drawing.Size(129, 23);
+            this.salir.Size = new System.Drawing.Size(97, 19);
             this.salir.TabIndex = 3;
             this.salir.Text = "salir";
             this.salir.UseVisualStyleBackColor = false;
             // 
             // tusuario
             // 
-            this.tusuario.Location = new System.Drawing.Point(240, 55);
+            this.tusuario.Location = new System.Drawing.Point(180, 45);
+            this.tusuario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tusuario.Name = "tusuario";
-            this.tusuario.Size = new System.Drawing.Size(214, 22);
+            this.tusuario.Size = new System.Drawing.Size(162, 20);
             this.tusuario.TabIndex = 4;
             // 
             // tcontraseña
             // 
-            this.tcontraseña.Location = new System.Drawing.Point(240, 108);
+            this.tcontraseña.Location = new System.Drawing.Point(180, 88);
+            this.tcontraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tcontraseña.Name = "tcontraseña";
-            this.tcontraseña.Size = new System.Drawing.Size(214, 22);
+            this.tcontraseña.Size = new System.Drawing.Size(162, 20);
             this.tcontraseña.TabIndex = 5;
+            this.tcontraseña.UseSystemPasswordChar = true;
             // 
             // cadministrador
             // 
             this.cadministrador.AutoSize = true;
-            this.cadministrador.Location = new System.Drawing.Point(66, 176);
+            this.cadministrador.Location = new System.Drawing.Point(50, 143);
+            this.cadministrador.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cadministrador.Name = "cadministrador";
-            this.cadministrador.Size = new System.Drawing.Size(116, 21);
+            this.cadministrador.Size = new System.Drawing.Size(88, 17);
             this.cadministrador.TabIndex = 6;
             this.cadministrador.Text = "administrador";
             this.cadministrador.UseVisualStyleBackColor = true;
             // 
             // login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ClientSize = new System.Drawing.Size(564, 407);
+            this.ClientSize = new System.Drawing.Size(423, 331);
             this.Controls.Add(this.cadministrador);
             this.Controls.Add(this.tcontraseña);
             this.Controls.Add(this.tusuario);
@@ -111,6 +119,7 @@
             this.Controls.Add(this.iniciar);
             this.Controls.Add(this.contraseña);
             this.Controls.Add(this.usuario);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "login";
             this.Text = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.login_FormClosed);
