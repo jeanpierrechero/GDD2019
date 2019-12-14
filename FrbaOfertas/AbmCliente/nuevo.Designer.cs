@@ -62,7 +62,6 @@
             this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "nombre";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -238,7 +237,7 @@
             // 
             // agregarnuevo
             // 
-            this.agregarnuevo.Location = new System.Drawing.Point(61, 492);
+            this.agregarnuevo.Location = new System.Drawing.Point(61, 485);
             this.agregarnuevo.Margin = new System.Windows.Forms.Padding(2);
             this.agregarnuevo.Name = "agregarnuevo";
             this.agregarnuevo.Size = new System.Drawing.Size(116, 29);

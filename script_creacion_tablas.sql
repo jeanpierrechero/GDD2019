@@ -34,6 +34,7 @@ BEGIN TRY
 		cliente_ciudad_id int NULL,
 		cliente_codigo_postal int NULL,
 		cliente_credito numeric(18,2) NULL,
+		cliente_estado bit default 0
 	)
 
 	CREATE TABLE CRISPI.Funcionalidad( 

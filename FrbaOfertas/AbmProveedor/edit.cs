@@ -16,10 +16,12 @@ namespace FrbaOfertas.AbmProveedor
     public partial class edit : Form
     {
         private Proveedor _proveedor;
+        private Session _session;
 
-        public edit(Proveedor proveedor)
+        public edit(Proveedor proveedor,Session session)
         {
             _proveedor = proveedor;
+            _session = session;
             InitializeComponent();
             llenar_combo_ciudad();
             cargarDatos();
@@ -82,7 +84,7 @@ namespace FrbaOfertas.AbmProveedor
             this.updateRubrosProveedores(lista);
 
             MessageBox.Show("guardado");
-            AbmProveedor.listado listado = new AbmProveedor.listado();
+            AbmProveedor.listado listado = new AbmProveedor.listado(_session);
             this.Hide();
             listado.Show();
         }

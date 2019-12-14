@@ -47,6 +47,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.estado = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // nuevofecha
@@ -222,11 +224,32 @@
             this.label1.TabIndex = 25;
             this.label1.Text = "nombre";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(81, 376);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.TabIndex = 48;
+            this.label3.Text = "habilitado";
+            // 
+            // estado
+            // 
+            this.estado.AutoSize = true;
+            this.estado.Location = new System.Drawing.Point(288, 376);
+            this.estado.Name = "estado";
+            this.estado.Size = new System.Drawing.Size(15, 14);
+            this.estado.TabIndex = 49;
+            this.estado.UseVisualStyleBackColor = true;
+            // 
             // edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 473);
+            this.Controls.Add(this.estado);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.nuevofecha);
             this.Controls.Add(this.ciudad);
             this.Controls.Add(this.guardar);
@@ -274,5 +297,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox estado;
     }
 }

@@ -15,8 +15,10 @@ namespace FrbaOfertas.AbmCliente
     public partial class listado : Form
     {
         private DataSet ds;
-        public listado()
+        public Session _session;
+        public listado(Session session)
         {
+            this._session = session;
             InitializeComponent();
             index();
         }
@@ -29,17 +31,23 @@ namespace FrbaOfertas.AbmCliente
                 ds = utilidades.ejecutar(instruccion);
                 dgv_listado.DataSource = ds.Tables[0].DefaultView;
 
-                DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
-                btnEliminar.Name = "Eliminar";
-                btnEliminar.Text = "Eliminar";
-                btnEliminar.UseColumnTextForButtonValue = true;
-                dgv_listado.Columns.Add(btnEliminar);
+                if (Permission.hasPermission(_session.rol_id, "ELIMINAR_CLIENTE"))
+                {
+                    DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
+                    btnEliminar.Name = "Eliminar";
+                    btnEliminar.Text = "Eliminar";
+                    btnEliminar.UseColumnTextForButtonValue = true;
+                    dgv_listado.Columns.Add(btnEliminar);
+                }
 
-                DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
-                btnEditar.Name = "Editar";
-                btnEditar.Text = "Editar";
-                btnEditar.UseColumnTextForButtonValue = true;
-                dgv_listado.Columns.Add(btnEditar);
+                if (Permission.hasPermission(_session.rol_id, "EDITAR_CLIENTE"))
+                {
+                    DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
+                    btnEditar.Name = "Editar";
+                    btnEditar.Text = "Editar";
+                    btnEditar.UseColumnTextForButtonValue = true;
+                    dgv_listado.Columns.Add(btnEditar);
+                }
 
                 dgv_listado.Columns["cliente_id"].Visible = false;
 
@@ -82,6 +90,7 @@ namespace FrbaOfertas.AbmCliente
                 {
                     string instruccion = string.Format("delete from CRISPI.Clientes where cliente_id = '{0}'", user_id);
                     DataSet ds = utilidades.ejecutar(instruccion);
+                    MessageBox.Show("El participante ha sido eliminado.");
                 }
                 catch (Exception er)
                 {
@@ -96,7 +105,7 @@ namespace FrbaOfertas.AbmCliente
                 string instruccion = string.Format("select * from CRISPI.view_clientes where cliente_id = '{0}'",user_id);
                 DataSet ds = utilidades.ejecutar(instruccion);
                 Cliente cliente = new Cliente(ds.Tables[0].Rows[0]);
-                AbmCliente.edit form = new AbmCliente.edit(cliente);
+                AbmCliente.edit form = new AbmCliente.edit(cliente,_session);
                 this.Hide();
                 form.Show();
             }

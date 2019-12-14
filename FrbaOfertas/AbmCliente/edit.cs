@@ -15,10 +15,12 @@ namespace FrbaOfertas.AbmCliente
     public partial class edit : Form
     {
         private Cliente _cliente;
+        private Session _session;
 
-        public edit(Cliente cliente)
+        public edit(Cliente cliente,Session session)
         {
             _cliente = cliente;
+            _session = session;
             InitializeComponent();
             llenar_combo_ciudad();
             cargarDatos();
@@ -63,7 +65,7 @@ namespace FrbaOfertas.AbmCliente
                 nuevocodigo.Text.Trim(),_cliente.id);
             utilidades.ejecutar(instruccion);
             MessageBox.Show("guardado");
-            AbmCliente.listado listado = new AbmCliente.listado();
+            AbmCliente.listado listado = new AbmCliente.listado(_session);
             this.Hide();
             listado.Show();
         }

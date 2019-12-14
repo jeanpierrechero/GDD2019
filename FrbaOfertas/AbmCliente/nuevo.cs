@@ -17,6 +17,7 @@ namespace FrbaOfertas.AbmCliente
         {
             InitializeComponent();
             llenar_combo_ciudad();
+            inicializarFecha();
         }
 
         public void llenar_combo_ciudad()
@@ -34,9 +35,10 @@ namespace FrbaOfertas.AbmCliente
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        public void inicializarFecha()
         {
-
+            nuevofecha.CustomFormat = " ";
+            nuevofecha.Format = DateTimePickerFormat.Custom;
         }
 
         private void agregarnuevo_Click(object sender, EventArgs e)
