@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 create  FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
 RETURNS int
 AS 
@@ -228,9 +228,9 @@ begin try
 	begin transaction
 	declare @r int
 	select @r=rubro_proveedor_id from CRISPI.Rubro_Proveedor where rubro_id=@rubro and rubro_proveedor=@proveedor
-	insert into CRISPI.Oferta (oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,ofe,oferta_usuario_creador_id)
+	insert into CRISPI.Oferta (oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_rubro_proveedor_id,oferta_usuario_creador_id)
 
-	values(@codigooferta,@descripcion,@precio,@preciolista,@cantidad,@maximo,@fechainicio,@fechafin,@proveedor,@usuario);
+	values(@codigooferta,@descripcion,@precio,@preciolista,@cantidad,@maximo,@fechainicio,@fechafin,@r,@usuario);
 	commit transaction
 end try
 	rollback transaction
@@ -274,10 +274,13 @@ create procedure CRISPI.proc_actualizar_oferta
 @cantidad numeric(18,0),
 @maximo int,
 @proveedor int,
-@usuario int
+@usuario int,
+@rubro int 
 as 
 begin try 
 	begin transaction
+	declare @r int 
+	select @r=rubro_proveedor_id from CRISPI.Rubro_Proveedor where rubro_id=@rubro and rubro_proveedor=@proveedor
 	update CRISPI.Oferta
 	set oferta_codigo=@codigooferta,
 	oferta_descripcion=@descripcion,
@@ -287,7 +290,7 @@ begin try
 	oferta_maxima=@maximo,
 	oferta_fecha_inicio=@fechainicio,
 	oferta_fecha_fin=@fechafin,
-	oferta_proveedor_id=@proveedor,
+	oferta_rubro_proveedor_id=@r,
 	oferta_usuario_creador_id=@usuario
 	where oferta_id =@oferta
 
@@ -304,6 +307,9 @@ create procedure CRISPI.proc_eliminar_oferta
 as
 begin try 
 	begin transaction
+	update CRISPI.Oferta
+	set oferta_eliminado=1
+	where oferta_id=@oferta
 
 
 
@@ -315,7 +321,7 @@ begin catch
 end catch
 go
 
-alter procedure CRISPI.proc_comprar_oferta
+create procedure CRISPI.proc_comprar_oferta
 @oferta int,
 @cliente int,
 --@fecha datetime,
@@ -342,7 +348,7 @@ as
 
 
 	select oferta_id,oferta_descripcion from CRISPI.Oferta
-	where YEAR(GETDATE())<=YEAR(oferta_fecha_inicio) and MONTH(GETDATE())<=MONTH(oferta_fecha_inicio)  
+	where YEAR(GETDATE())<=YEAR(oferta_fecha_inicio) and MONTH(GETDATE())<=MONTH(oferta_fecha_inicio) and oferta_eliminado=0  
 
 
 go

@@ -261,11 +261,8 @@ BEGIN TRY
 		('ALTA_PROVEEDOR'),
 		('EDITAR_PROVEEDOR'),
 		('ELIMINAR_PROVEEDOR'),
-<<<<<<< HEAD
 		('VISUALIZAR_LISTADO_ESTADISTICO')
-=======
-		('VISUALIZAR_LISTADO_ESTADISTICO');
->>>>>>> 5294e1ad6af7e938e0c94557395cf99e6152ab92
+
 	PRINT 'Funcionalidades creadas correctamente'
 
 
@@ -394,5 +391,5 @@ GO
 
 
 
---exec CRISPI.proc_create_tables
+exec CRISPI.proc_create_tables
 
