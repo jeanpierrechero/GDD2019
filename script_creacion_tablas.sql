@@ -1,6 +1,6 @@
 USE GD2C2019
 GO
-CREATE  PROCEDURE CRISPI.proc_create_tables
+CREATE PROCEDURE CRISPI.proc_create_tables
 AS
 BEGIN TRY	
 	begin transaction;
@@ -249,7 +249,7 @@ BEGIN TRY
 	VALUES('ALTA_ROL'),
 		('BAJA_ROL'),
 		('EDITAR_ROL'),
-		('VISUALIZAR_ROL')
+		('VISUALIZAR_ROL'),
 		('ALTA_OFERTA'),
 		('BAJA_OFERTA'),
 		('EDITAR_OFERTA'),
@@ -261,7 +261,7 @@ BEGIN TRY
 		('VISUALIZAR_PROVEEDOR'),
 		('ALTA_PROVEEDOR'),
 		('EDITAR_PROVEEDOR'),
-		('ELIMINAR_PROVEEDOR')
+		('ELIMINAR_PROVEEDOR'),
 		('VISUALIZAR_LISTADO_ESTADISTICO');
 	PRINT 'Funcionalidades creadas correctamente'
 
@@ -333,12 +333,14 @@ BEGIN TRY
 
 	
 	PRINT 'Migracion oferta'
-	INSERT INTO CRISPI.Oferta(oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_proveedor_id)
-	SELECT Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,1,Oferta_Fecha,Oferta_Fecha_Venc,p.proveedor_id
+	INSERT INTO CRISPI.Oferta(oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_rubro_proveedor_id)
+	SELECT Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,1,Oferta_Fecha,Oferta_Fecha_Venc,rp.rubro_proveedor_id
 	FROM gd_esquema.Maestra m
 	join CRISPI.Proveedor p on p.proveedor_cuit = m.Provee_CUIT
+	join CRISPI.Rubro r on r.rubro_nombre = m.Provee_Rubro	
+	join CRISPI.Rubro_Proveedor rp on rp.rubro_proveedor_id = p.proveedor_id and rp.rubro_id = r.rubro_id
 	where m.Oferta_Codigo is not null
-	group by Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,Oferta_Fecha,Oferta_Fecha_Venc,p.proveedor_id
+	group by Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,Oferta_Fecha,Oferta_Fecha_Venc,rp.rubro_proveedor_id
 	PRINT 'oferta migrados correctamente'
 
 
@@ -373,7 +375,7 @@ BEGIN TRY
 	where m.Factura_Nro is not null and m.Oferta_Codigo=o.oferta_codigo and m.Cli_Dni=c.cliente_dni
 	PRINT 'migrados correctamente'	
 
-	commit
+	commit transaction
 END TRY
 BEGIN CATCH	
 	SELECT  
@@ -385,5 +387,6 @@ BEGIN CATCH
         ,ERROR_MESSAGE() AS ErrorMessage; 
 	rollback    
 END CATCH
+GO
 
-exec CRISPI.proc_create_tables
+

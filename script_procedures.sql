@@ -20,7 +20,7 @@ END
 GO
 
 
-create or alter function CRISPI.hasPermission (@rol_id int,@name_permission nvarchar(50))
+create function CRISPI.hasPermission (@rol_id int,@name_permission nvarchar(50))
 RETURNS bit
 AS 
 BEGIN
@@ -109,7 +109,7 @@ end catch
 GO
 
 
-create or alter procedure CRISPI.proc_update_cliente
+create procedure CRISPI.proc_update_cliente
 	@nombre nvarchar(255),
 	@apellido nvarchar(255),
 	@dni numeric(18,0),
@@ -308,7 +308,7 @@ begin catch
 end catch
 go
 
-alter procedure CRISPI.proc_comprar_oferta
+create procedure CRISPI.proc_comprar_oferta
 @oferta int,
 @cliente int,
 --@fecha datetime,
@@ -382,4 +382,5 @@ begin catch
 	rollback transaction
 end catch
 go
+
 

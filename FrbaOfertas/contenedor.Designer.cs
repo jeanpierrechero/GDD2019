@@ -1,4 +1,4 @@
-﻿using FrbaOfertas.Models;
+using FrbaOfertas.Models;
 namespace FrbaOfertas
 {
     partial class contenedor
@@ -323,8 +323,10 @@ namespace FrbaOfertas
             {
                 this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.proveedorToolStripMenuItem });
             }
-
-            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.clienteToolStripMenuItem });
+            if (Permission.hasPermission(_session.rol_id, "VISUALIZAR_CLIENTE"))
+            {
+                this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.clienteToolStripMenuItem });
+            }
             this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.ofertasToolStripMenuItem});
             this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
             this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
@@ -357,9 +359,11 @@ namespace FrbaOfertas
             // 
             // clienteToolStripMenuItem
             // 
-            this.clienteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.altaToolStripMenuItem,
-            this.listadoClienteToolStripMenuItem});
+            if (Permission.hasPermission(_session.rol_id, "ALTA_CLIENTE"))
+            {
+                this.clienteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.altaToolStripMenuItem });
+            }
+            this.clienteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.listadoClienteToolStripMenuItem});
             this.clienteToolStripMenuItem.Name = "clienteToolStripMenuItem";
             this.clienteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clienteToolStripMenuItem.Text = "cliente";

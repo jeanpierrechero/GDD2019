@@ -19,8 +19,6 @@ namespace FrbaOfertas.AbmCliente
         {
             InitializeComponent();
             index();
-            inicializarFecha();
-            llenar_combo_ciudad();
         }
 
         public void index()
@@ -58,10 +56,8 @@ namespace FrbaOfertas.AbmCliente
             {
                 DataView dv = ds.Tables[0].DefaultView;
                 dv.RowFilter = string.Format("cliente_nombre LIKE '%{0}%' and cliente_apellido LIKE '%{1}%' and " + 
-                            "cliente_mail LIKE '%{2}%' and Convert(cliente_dni,'System.String') LIKE '%{3}%' and "+
-                            "Convert(cliente_telefono,'System.String') LIKE '%{4}%'", 
-                            lnombre.Text.Trim(), lapellido.Text.Trim(), lmail.Text.Trim(), ldni.Text.Trim(),
-                            ltelefono.Text.Trim());
+                            "cliente_mail LIKE '%{2}%' and Convert(cliente_dni,'System.String') LIKE '{3}'", 
+                            lnombre.Text.Trim(), lapellido.Text.Trim(), lmail.Text.Trim(), ldni.Text.Trim());
                 dgv_listado.DataSource = dv;
             }
             catch (Exception error)
@@ -76,52 +72,8 @@ namespace FrbaOfertas.AbmCliente
             lapellido.Text = "";
             ldni.Text = "";
             lmail.Text = "";
-            ltelefono.Text = "";
-            lcodigo_postal.Text = "";
-            inicializarFecha();
         }
-
-        public void inicializarFecha() {
-            lfecha_desde.CustomFormat = " ";
-            lfecha_desde.Format = DateTimePickerFormat.Custom;
-
-            lfecha_hasta.CustomFormat = " ";
-            lfecha_hasta.Format = DateTimePickerFormat.Custom; 
-        }
-
-        private void lfecha_ValueChanged(object sender, EventArgs e)
-        {
-            lfecha_desde.CustomFormat = "yyyy-MM-dd hh:mm:ss";
-            lfecha_desde.Format = DateTimePickerFormat.Custom;
-
-            lfecha_hasta.CustomFormat = "yyyy-MM-dd hh:mm:ss";
-            lfecha_hasta.Format = DateTimePickerFormat.Custom; 
-        }
-
-        public void llenar_combo_ciudad()
-        {
-            try
-            {
-                string instruccion = string.Format("select ciudad_id,ciudad_nombre from CRISPI.Ciudad");
-                DataSet ds = utilidades.ejecutar(instruccion);
-                lciudad.DataSource = ds.Tables[0].DefaultView;
-                lciudad.ValueMember = "ciudad_nombre";
-                /*
-
-                DataTable dt = ds.Tables[0];
-                DataRow dr = dt.NewRow();
-                dr["ciudad_id"] = 0;
-                dr["ciudad_nombre"] = "Todos";
-                dt.Rows.Add(dr);
-                ds.Tables.Add(dt);*/
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-        }
-
+        
         private void dgv_listado_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (this.dgv_listado.Columns[e.ColumnIndex].Name == "Eliminar") {
