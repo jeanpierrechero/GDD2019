@@ -156,7 +156,7 @@ namespace FrbaOfertas
 
         private void listadoClienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbmCliente.listado listado = new AbmCliente.listado();
+            AbmCliente.listado listado = new AbmCliente.listado(sesion);
             listado.MdiParent = this;
             listado.Show();
         }

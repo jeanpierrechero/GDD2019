@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE CRISPI.proc_drop_tables
+CREATE PROCEDURE CRISPI.proc_drop_tables
 AS
 BEGIN TRY
 	BEGIN TRANSACTION	
@@ -29,7 +29,7 @@ BEGIN TRY
 
 	ALTER TABLE CRISPI.Credito DROP CONSTRAINT fk_credito_tipo_pago_id;
 
-	ALTER TABLE CRISPI.Oferta DROP CONSTRAINT fk_oferta_proveedor_id;
+	ALTER TABLE CRISPI.Oferta DROP CONSTRAINT fk_oferta_rubro_proveedor_id;
 
 	ALTER TABLE CRISPI.Oferta DROP CONSTRAINT fk_oferta_usuario_creador_id;
 
