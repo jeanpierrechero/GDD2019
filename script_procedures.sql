@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 create  FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
 RETURNS int
 AS 
@@ -389,4 +390,3 @@ begin catch
 	rollback transaction
 end catch
 go
-

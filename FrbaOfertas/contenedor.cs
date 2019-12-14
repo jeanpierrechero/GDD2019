@@ -16,11 +16,12 @@ namespace FrbaOfertas
     public partial class contenedor : Form
     {
         private int childFormNumber = 0;
-        private Session session;
+        private Session sesion;
 
         public contenedor(Session session)
         {
             InitializeComponent(session);
+            this.sesion = session;
         }
         
         private void ShowNewForm(object sender, EventArgs e)
@@ -162,7 +163,7 @@ namespace FrbaOfertas
 
         private void listadoProveedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbmProveedor.listado listado = new AbmProveedor.listado();
+            AbmProveedor.listado listado = new AbmProveedor.listado(sesion);
             listado.MdiParent = this;
             listado.Show();
 

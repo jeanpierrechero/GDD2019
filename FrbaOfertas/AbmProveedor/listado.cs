@@ -15,8 +15,12 @@ namespace FrbaOfertas.AbmProveedor
     public partial class listado : Form
     {
         private DataSet ds;
-        public listado()
+        private Session _session;
+
+
+        public listado(Session session)
         {
+            this._session = session;
             InitializeComponent();
             index();
             llenar_combo_ciudad();
@@ -31,17 +35,23 @@ namespace FrbaOfertas.AbmProveedor
                 ds = utilidades.ejecutar(instruccion);
                 dgv_listado.DataSource = ds.Tables[0].DefaultView;
 
-                DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
-                btnEliminar.Name = "Eliminar";
-                btnEliminar.Text = "Eliminar";
-                btnEliminar.UseColumnTextForButtonValue = true;
-                dgv_listado.Columns.Add(btnEliminar);
+                if (Permission.hasPermission(_session.rol_id, "ELIMINAR_PROVEEDOR"))
+                {
+                    DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
+                    btnEliminar.Name = "Eliminar";
+                    btnEliminar.Text = "Eliminar";
+                    btnEliminar.UseColumnTextForButtonValue = true;
+                    dgv_listado.Columns.Add(btnEliminar);
+                }
 
-                DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
-                btnEditar.Name = "Editar";
-                btnEditar.Text = "Editar";
-                btnEditar.UseColumnTextForButtonValue = true;
-                dgv_listado.Columns.Add(btnEditar);
+                if (Permission.hasPermission(_session.rol_id, "EDITAR_PROVEEDOR"))
+                {
+                    DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
+                    btnEditar.Name = "Editar";
+                    btnEditar.Text = "Editar";
+                    btnEditar.UseColumnTextForButtonValue = true;
+                    dgv_listado.Columns.Add(btnEditar);
+                }
 
                 dgv_listado.Columns["proveedor_id"].Visible = false;
             }
