@@ -1,4 +1,4 @@
-create function CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
+create or alter function CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
 RETURNS int
 AS 
 BEGIN
@@ -20,14 +20,11 @@ END
 GO
 
 
-create function CRISPI.hasPermission (@name_rol nvarchar(50),@name_permission nvarchar(50))
+create or alter function CRISPI.hasPermission (@rol_id int,@name_permission nvarchar(50))
 RETURNS bit
 AS 
 BEGIN
-	Declare @rol_id int;
 	Declare @funcionalidad_id int;
-	
-	select @rol_id = rol_id from CRISPI.Rol where rol_nombre = @name_rol and rol_estado = 1;
 	
 	select @funcionalidad_id = funcionalidad_id from CRISPI.Funcionalidad where funcionalidad_descripcion = @name_permission;
 
@@ -57,14 +54,18 @@ create or alter procedure CRISPI.proc_create_usuario_cliente
 as
 begin try
 	begin transaction
-
+	declare @id_usuario int;
 	declare @id_cliente int;
 
 	exec CRISPI.proc_create_cliente @nombre,@apellido,@dni,@fecha_nacimiento,@direccion,@ciudad_nombre,@mail,@telefono,@codigo_postal,@id = @id_cliente output;
 		
 	INSERT INTO CRISPI.Usuario(usuario_username,usuario_password,usuario_cliente_id,usuario_habilitado,usuario_estado,usuario_cantidad_errores)
-	values(@username,HASHBYTES('SHA2_256', CONVERT(nvarchar(50), @password)),@id_cliente,1,1,0)
+	values(@username,HASHBYTES('SHA2_256', CONVERT(nvarchar(50), @password)),@id_cliente,1,1,0);
+	SET @id_usuario=SCOPE_IDENTITY();
 
+	INSERT INTO CRISPI.Rol_Por_Usuario(usuario_id,rol_id)
+	values(@id_usuario,2);
+	
 	commit transaction
 end try
 begin catch
@@ -155,13 +156,18 @@ as
 begin try
 	begin transaction
 	declare @id_proveedor int;
+	declare @usuario_id int;
 
 	set @id_proveedor = 0;
 	
 	exec CRISPI.proc_create_proveedor @cuit,@razon_social,@direccion,@mail,@ciudad_nombre,@telefono,@id = @id_proveedor output;
 		
 	INSERT INTO CRISPI.Usuario(usuario_username,usuario_password,usuario_proveedor_id,usuario_habilitado,usuario_estado,usuario_cantidad_errores)
-	values(@username,HASHBYTES('SHA2_256', CONVERT(nvarchar(50), @password)),@id_proveedor,1,1,0)
+	values(@username,HASHBYTES('SHA2_256', CONVERT(nvarchar(50), @password)),@id_proveedor,1,1,0);
+	SET @usuario_id=SCOPE_IDENTITY();
+
+	INSERT INTO CRISPI.Rol_Por_Usuario(usuario_id,rol_id)
+	values(@usuario_id,3);
 	
 	commit transaction
 end try
@@ -231,7 +237,7 @@ end catch
 GO
 
 
-create procedure CRISPI.proc_insert_rol_proveedor(@rubro_id int,@proveedor_id int)
+create or alter procedure CRISPI.proc_insert_rol_proveedor(@rubro_id int,@proveedor_id int)
 as
 begin try
 	begin transaction

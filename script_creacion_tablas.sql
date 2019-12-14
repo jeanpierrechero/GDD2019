@@ -233,6 +233,11 @@ BEGIN TRY
 		('Usuario', 1),
 		('Proveedor',1);
 	PRINT 'Roles creados correctamente'
+	
+	PRINT 'Creando rol por usuario'
+	INSERT INTO CRISPI.Rol_Por_Usuario (usuario_id, rol_id)
+	VALUES(1, 1);
+	PRINT 'rol por usuario creado correctamente'
 
 
 	PRINT 'Creando funcionalidades'

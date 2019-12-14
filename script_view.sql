@@ -22,3 +22,15 @@ join CRISPI.Ciudad c on c.ciudad_id = p.proveedor_ciudad_id
 join CRISPI.Rubro_Proveedor rp on rp.rubro_proveedor = p.proveedor_id
 join CRISPI.Rubro r on r.rubro_id = rp.rubro_id
 GO
+
+
+IF OBJECT_ID('CRISPI.view_user', 'V') IS NOT NULL
+    DROP VIEW CRISPI.view_user
+GO
+
+CREATE VIEW CRISPI.view_user AS
+select u.usuario_id as id, u.usuario_username as username, r.rol_id as rol_id,u.usuario_proveedor_id as proveedor_id,
+	u.usuario_cliente_id as cliente_id 
+from CRISPI.Usuario u
+join CRISPI.Rol_Por_Usuario r on r.usuario_id = u.usuario_id
+GO

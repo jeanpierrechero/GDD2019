@@ -1,4 +1,5 @@
-﻿namespace FrbaOfertas
+﻿using FrbaOfertas.Models;
+namespace FrbaOfertas
 {
     partial class contenedor
     {
@@ -26,8 +27,11 @@
         /// Método necesario para admitir el Diseñador. No se puede modificar
         /// el contenido de este método con el editor de código.
         /// </summary>
-        private void InitializeComponent()
+        private Session _session;
+
+        private void InitializeComponent(Session session)
         {
+            this._session = session;
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(contenedor));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -315,19 +319,24 @@
             // 
             // mantenimientoToolStripMenuItem
             // 
-            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.proveedorToolStripMenuItem,
-            this.clienteToolStripMenuItem,
-            this.ofertasToolStripMenuItem});
+            if (Permission.hasPermission(_session.rol_id, "VISUALIZAR_PROVEEDORES"))
+            {
+                this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.proveedorToolStripMenuItem });
+
+            }
+            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.clienteToolStripMenuItem });
+            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.ofertasToolStripMenuItem});
             this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
             this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
             this.mantenimientoToolStripMenuItem.Text = "mantenimiento";
             // 
             // proveedorToolStripMenuItem
             // 
-            this.proveedorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.agregarToolStripMenuItem,
-            this.listadoProveedorToolStripMenuItem});
+            if (Permission.hasPermission(_session.rol_id, "AGREGAR_PROVEEDOR"))
+            {
+                this.proveedorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.agregarToolStripMenuItem });
+            }
+            this.proveedorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.listadoProveedorToolStripMenuItem });
             this.proveedorToolStripMenuItem.Name = "proveedorToolStripMenuItem";
             this.proveedorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.proveedorToolStripMenuItem.Text = "proveedor";

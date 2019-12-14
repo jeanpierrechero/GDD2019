@@ -9,18 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using conexionsql;
+using FrbaOfertas.Models;
 
 namespace FrbaOfertas
 {
     public partial class contenedor : Form
     {
         private int childFormNumber = 0;
+        private Session session;
 
-        public contenedor()
+        public contenedor(Session session)
         {
-            InitializeComponent();
+            InitializeComponent(session);
         }
-
+        
         private void ShowNewForm(object sender, EventArgs e)
         {
             Form childForm = new Form();
