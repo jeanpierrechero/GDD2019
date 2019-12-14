@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using conexionsql;
+using FrbaOfertas.Models;
 
 namespace FrbaOfertas
 {
@@ -35,26 +36,20 @@ namespace FrbaOfertas
                 valor = Convert.ToInt32(m.Tables[0].Rows[0][0].ToString());
                 if (valor == 1)
                 {
-                 
-                    if (Convert.ToBoolean(cadministrador.Checked))
-                    {
-                        contenedor n = new contenedor();
-                        this.Hide();
-                        n.Show();
-                    }
-                    else
-                    {
-                        contenedor u2 = new contenedor();
-                        this.Hide();
-                        u2.Show();
-                    }
+                    string instruccion = string.Format("select  top 1 * from CRISPI.view_user where username = '{0}'", tusuario.Text.Trim());
+                    DataSet ds = utilidades.ejecutar(instruccion);
+                    Session session = new Session(ds.Tables[0].Rows[0]);
+
+                    contenedor u2 = new contenedor(session);
+                    this.Hide();
+                    u2.Show();
                 }
 
 
             }
             catch (Exception error)
             {
-                MessageBox.Show("usuario o contraseña incorrecto");
+                MessageBox.Show(error.Message);
             }
         
         }

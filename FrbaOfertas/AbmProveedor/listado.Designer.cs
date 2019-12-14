@@ -122,6 +122,7 @@
             this.dgv_listado.Name = "dgv_listado";
             this.dgv_listado.Size = new System.Drawing.Size(869, 272);
             this.dgv_listado.TabIndex = 15;
+            this.dgv_listado.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_listado_CellClick);
             // 
             // lcodigopostal
             // 
