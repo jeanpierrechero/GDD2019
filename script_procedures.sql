@@ -20,7 +20,7 @@ END
 GO
 
 
-create or alter function CRISPI.hasPermission (@rol_id int,@name_permission nvarchar(50))
+create  function CRISPI.hasPermission (@rol_id int,@name_permission nvarchar(50))
 RETURNS bit
 AS 
 BEGIN
@@ -109,7 +109,7 @@ end catch
 GO
 
 
-create or alter procedure CRISPI.proc_update_cliente
+create  procedure CRISPI.proc_update_cliente
 	@nombre nvarchar(255),
 	@apellido nvarchar(255),
 	@dni numeric(18,0),
@@ -218,11 +218,17 @@ create procedure CRISPI.proc_create_oferta
 	@cantidad numeric(18,0),
 	@maximo int,
 	@proveedor int,
-	@usuario int
-as
-begin try
-	begin transaction
-	insert into CRISPI.Oferta (oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_proveedor_id,oferta_usuario_creador_id)
+	@usuario int,
+	@rubro int
+as
+
+begin try
+
+	begin transaction
+	declare @r int
+	select @r=rubro_proveedor_id from CRISPI.Rubro_Proveedor where rubro_id=@rubro and rubro_proveedor=@proveedor
+	insert into CRISPI.Oferta (oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,ofe,oferta_usuario_creador_id)
+
 	values(@codigooferta,@descripcion,@precio,@preciolista,@cantidad,@maximo,@fechainicio,@fechafin,@proveedor,@usuario);
 	commit transaction
 end try
@@ -231,7 +237,7 @@ end try
 begin catch
 GO	
 
-create or alter procedure CRISPI.proc_update_proveedor
+create procedure CRISPI.proc_update_proveedor
 	@cuit nvarchar(20),
 	@razon_social nvarchar(100),
 	@direccion nvarchar(255),
@@ -364,11 +370,12 @@ begin try
 end try
 begin catch
 	rollback transaction
-end catch
+end catch
+
 go
 
 
-create or alter procedure CRISPI.proc_insert_rol_proveedor(@rubro_id int,@proveedor_id int)
+create  procedure CRISPI.proc_insert_rol_proveedor(@rubro_id int,@proveedor_id int)
 as
 begin try
 	begin transaction

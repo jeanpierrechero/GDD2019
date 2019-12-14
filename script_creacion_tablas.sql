@@ -105,8 +105,7 @@ BEGIN TRY
 		oferta_cantidad numeric(18,0) NOT NULL,
 		oferta_maxima int NOT NULL,
 		oferta_fecha_inicio datetime,
-		oferta_fecha_fin datetime,
-		--oferta_proveedor_id int NOT NULL, 
+		oferta_fecha_fin datetime, 
 		oferta_usuario_creador_id int NULL,
 		oferta_eliminado bit DEFAULT 0,
 		oferta_rubro_proveedor_id int 
@@ -195,7 +194,7 @@ BEGIN TRY
 
 	ALTER TABLE CRISPI.Credito ADD CONSTRAINT fk_credito_tipo_pago_id FOREIGN KEY (credito_tipo_pago_id) REFERENCES CRISPI.Tipo_pago(tipo_pago_id);
 
-	ALTER TABLE CRISPI.Oferta ADD CONSTRAINT fk_oferta_rubro_proveedor_id FOREIGN KEY (Oferta_rubro_proveedor_id) REFERENCES CRISPI.Rubro_Proveedor(rubro_proveedor_id);
+	ALTER TABLE CRISPI.Oferta ADD CONSTRAINT fk_oferta_rubro_proveedor_id FOREIGN KEY (oferta_rubro_proveedor_id) REFERENCES CRISPI.Rubro_Proveedor(rubro_proveedor_id);
 
 	ALTER TABLE CRISPI.Oferta ADD CONSTRAINT fk_oferta_usuario_creador_id FOREIGN KEY (oferta_usuario_creador_id) REFERENCES CRISPI.Usuario(usuario_id);
 
@@ -249,7 +248,7 @@ BEGIN TRY
 	VALUES('ALTA_ROL'),
 		('BAJA_ROL'),
 		('EDITAR_ROL'),
-		('VISUALIZAR_ROL')
+		('VISUALIZAR_ROL'),
 		('ALTA_OFERTA'),
 		('BAJA_OFERTA'),
 		('EDITAR_OFERTA'),
@@ -261,8 +260,8 @@ BEGIN TRY
 		('VISUALIZAR_PROVEEDOR'),
 		('ALTA_PROVEEDOR'),
 		('EDITAR_PROVEEDOR'),
-		('ELIMINAR_PROVEEDOR')
-		('VISUALIZAR_LISTADO_ESTADISTICO');
+		('ELIMINAR_PROVEEDOR'),
+		('VISUALIZAR_LISTADO_ESTADISTICO')
 	PRINT 'Funcionalidades creadas correctamente'
 
 
@@ -386,4 +385,4 @@ BEGIN CATCH
 	rollback    
 END CATCH
 
-exec CRISPI.proc_create_tables
+--exec CRISPI.proc_create_tables
