@@ -34,12 +34,11 @@
             this.salir = new System.Windows.Forms.Button();
             this.tusuario = new System.Windows.Forms.TextBox();
             this.tcontraseña = new System.Windows.Forms.TextBox();
-            this.cadministrador = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // usuario
             // 
-            this.usuario.Location = new System.Drawing.Point(47, 39);
+            this.usuario.Location = new System.Drawing.Point(47, 45);
             this.usuario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.usuario.Name = "usuario";
             this.usuario.Size = new System.Drawing.Size(75, 19);
@@ -59,7 +58,7 @@
             // 
             this.iniciar.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.iniciar.Location = new System.Drawing.Point(50, 227);
-            this.iniciar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.iniciar.Margin = new System.Windows.Forms.Padding(2);
             this.iniciar.Name = "iniciar";
             this.iniciar.Size = new System.Drawing.Size(97, 19);
             this.iniciar.TabIndex = 2;
@@ -71,7 +70,7 @@
             // 
             this.salir.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.salir.Location = new System.Drawing.Point(205, 227);
-            this.salir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.salir.Margin = new System.Windows.Forms.Padding(2);
             this.salir.Name = "salir";
             this.salir.Size = new System.Drawing.Size(97, 19);
             this.salir.TabIndex = 3;
@@ -81,7 +80,7 @@
             // tusuario
             // 
             this.tusuario.Location = new System.Drawing.Point(180, 45);
-            this.tusuario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tusuario.Margin = new System.Windows.Forms.Padding(2);
             this.tusuario.Name = "tusuario";
             this.tusuario.Size = new System.Drawing.Size(162, 20);
             this.tusuario.TabIndex = 4;
@@ -89,22 +88,11 @@
             // tcontraseña
             // 
             this.tcontraseña.Location = new System.Drawing.Point(180, 88);
-            this.tcontraseña.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tcontraseña.Margin = new System.Windows.Forms.Padding(2);
             this.tcontraseña.Name = "tcontraseña";
             this.tcontraseña.Size = new System.Drawing.Size(162, 20);
             this.tcontraseña.TabIndex = 5;
             this.tcontraseña.UseSystemPasswordChar = true;
-            // 
-            // cadministrador
-            // 
-            this.cadministrador.AutoSize = true;
-            this.cadministrador.Location = new System.Drawing.Point(50, 143);
-            this.cadministrador.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.cadministrador.Name = "cadministrador";
-            this.cadministrador.Size = new System.Drawing.Size(88, 17);
-            this.cadministrador.TabIndex = 6;
-            this.cadministrador.Text = "administrador";
-            this.cadministrador.UseVisualStyleBackColor = true;
             // 
             // login
             // 
@@ -112,14 +100,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Highlight;
             this.ClientSize = new System.Drawing.Size(423, 331);
-            this.Controls.Add(this.cadministrador);
             this.Controls.Add(this.tcontraseña);
             this.Controls.Add(this.tusuario);
             this.Controls.Add(this.salir);
             this.Controls.Add(this.iniciar);
             this.Controls.Add(this.contraseña);
             this.Controls.Add(this.usuario);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "login";
             this.Text = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.login_FormClosed);
@@ -137,7 +124,6 @@
         private System.Windows.Forms.Button salir;
         private System.Windows.Forms.TextBox tusuario;
         private System.Windows.Forms.TextBox tcontraseña;
-        private System.Windows.Forms.CheckBox cadministrador;
     }
 }
 

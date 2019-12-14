@@ -18,11 +18,6 @@ namespace FrbaOfertas.Facturar
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string instruccion = string.Format("exec CRISPI.facturar '{0}','{1}'", cliente.Text, fecha.Text);
-            utilidades.ejecutar(instruccion);
-
-        }
+        
     }
 }

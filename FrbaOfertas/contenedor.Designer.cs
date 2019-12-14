@@ -319,11 +319,11 @@ namespace FrbaOfertas
             // 
             // mantenimientoToolStripMenuItem
             // 
-            if (Permission.hasPermission(_session.rol_id, "VISUALIZAR_PROVEEDORES"))
+            if (Permission.hasPermission(_session.rol_id, "VISUALIZAR_PROVEEDOR"))
             {
                 this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.proveedorToolStripMenuItem });
-
             }
+
             this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.clienteToolStripMenuItem });
             this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.ofertasToolStripMenuItem});
             this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
@@ -332,7 +332,7 @@ namespace FrbaOfertas
             // 
             // proveedorToolStripMenuItem
             // 
-            if (Permission.hasPermission(_session.rol_id, "AGREGAR_PROVEEDOR"))
+            if (Permission.hasPermission(_session.rol_id, "ALTA_PROVEEDOR"))
             {
                 this.proveedorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.agregarToolStripMenuItem });
             }
