@@ -1,4 +1,6 @@
-CREATE OR ALTER PROCEDURE CRISPI.proc_create_tables
+USE GD2C2019
+GO
+CREATE  PROCEDURE CRISPI.proc_create_tables
 AS
 BEGIN TRY	
 	begin transaction;
@@ -104,8 +106,10 @@ BEGIN TRY
 		oferta_maxima int NOT NULL,
 		oferta_fecha_inicio datetime,
 		oferta_fecha_fin datetime,
-		oferta_proveedor_id int NOT NULL, 
+		--oferta_proveedor_id int NOT NULL, 
 		oferta_usuario_creador_id int NULL,
+		oferta_eliminado bit DEFAULT 0,
+		oferta_rubro_proveedor_id int 
 	)
 
 	CREATE TABLE CRISPI.Facturacion(
@@ -191,7 +195,7 @@ BEGIN TRY
 
 	ALTER TABLE CRISPI.Credito ADD CONSTRAINT fk_credito_tipo_pago_id FOREIGN KEY (credito_tipo_pago_id) REFERENCES CRISPI.Tipo_pago(tipo_pago_id);
 
-	ALTER TABLE CRISPI.Oferta ADD CONSTRAINT fk_oferta_proveedor_id FOREIGN KEY (Oferta_proveedor_id) REFERENCES CRISPI.Proveedor(proveedor_id);
+	ALTER TABLE CRISPI.Oferta ADD CONSTRAINT fk_oferta_rubro_proveedor_id FOREIGN KEY (Oferta_rubro_proveedor_id) REFERENCES CRISPI.Rubro_Proveedor(rubro_proveedor_id);
 
 	ALTER TABLE CRISPI.Oferta ADD CONSTRAINT fk_oferta_usuario_creador_id FOREIGN KEY (oferta_usuario_creador_id) REFERENCES CRISPI.Usuario(usuario_id);
 
@@ -369,3 +373,4 @@ BEGIN CATCH
 	rollback    
 END CATCH
 
+exec CRISPI.proc_create_tables

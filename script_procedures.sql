@@ -1,4 +1,4 @@
-create or alter FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
+create  FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
 RETURNS int
 AS 
 BEGIN
@@ -21,7 +21,7 @@ GO
 
 
 
-create or alter procedure CRISPI.proc_create_usuario_cliente
+create  procedure CRISPI.proc_create_usuario_cliente
 	@nombre nvarchar(255),
 	@apellido nvarchar(255),
 	@username nvarchar(255),
@@ -52,7 +52,7 @@ end catch
 GO
 
 
-create or alter procedure CRISPI.proc_create_cliente
+create  procedure CRISPI.proc_create_cliente
 	@nombre nvarchar(255),
 	@apellido nvarchar(255),
 	@dni numeric(18,0),
@@ -89,7 +89,7 @@ GO
 
 
 
-create or alter procedure CRISPI.proc_create_usuario_proveedor
+create  procedure CRISPI.proc_create_usuario_proveedor
 	@razon_social nvarchar(100),
 	@username nvarchar(255),
 	@password nvarchar(255),
@@ -120,7 +120,7 @@ end catch
 GO
 
 
-create or alter procedure CRISPI.proc_create_proveedor
+create  procedure CRISPI.proc_create_proveedor
 	@cuit nvarchar(20),
 	@razon_social nvarchar(100),
 	@direccion nvarchar(255),
@@ -148,3 +148,143 @@ begin catch
     THROW;
 end catch
 GO
+
+create procedure CRISPI.proc_create_oferta
+@codigooferta nvarchar(50),
+@descripcion nvarchar(255),
+@precio numeric(18,2),
+@preciolista numeric(18,2),
+@fechainicio datetime,
+@fechafin  datetime,
+@cantidad numeric(18,0),
+@maximo int,
+@proveedor int,
+@usuario int
+as
+begin try
+	begin transaction
+	insert into CRISPI.Oferta (oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_proveedor_id,oferta_usuario_creador_id)
+	values(@codigooferta,@descripcion,@precio,@preciolista,@cantidad,@maximo,@fechainicio,@fechafin,@proveedor,@usuario)
+	commit transaction
+end try
+begin catch
+	rollback transaction
+	throw;
+end catch
+go
+
+create procedure CRISPI.proc_actualizar_oferta
+@oferta int,
+@codigooferta nvarchar(50),
+@descripcion nvarchar(255),
+@precio numeric(18,2),
+@preciolista numeric(18,2),
+@fechainicio datetime,
+@fechafin  datetime,
+@cantidad numeric(18,0),
+@maximo int,
+@proveedor int,
+@usuario int
+as 
+begin try 
+	begin transaction
+	update CRISPI.Oferta
+	set oferta_codigo=@codigooferta,
+	oferta_descripcion=@descripcion,
+	oferta_precio=@precio,
+	oferta_lista=@preciolista,
+	oferta_cantidad=@cantidad,
+	oferta_maxima=@maximo,
+	oferta_fecha_inicio=@fechainicio,
+	oferta_fecha_fin=@fechafin,
+	oferta_proveedor_id=@proveedor,
+	oferta_usuario_creador_id=@usuario
+	where oferta_id =@oferta
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+	throw;
+end catch
+go
+
+create procedure CRISPI.proc_eliminar_oferta
+@oferta int
+as
+begin try 
+	begin transaction
+
+
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+	throw;
+end catch
+go
+
+alter procedure CRISPI.proc_comprar_oferta
+@oferta int,
+@cliente int,
+--@fecha datetime,
+@cliente_destino int
+as 
+begin try
+	begin transaction
+	 insert into CRISPI.Venta(venta_oferta_id,venta_cliente_id,venta_fecha,venta_cliente_destino_id)
+	 values(@oferta,@cliente,GETDATE(),@cliente_destino)
+	 declare @precio numeric(18,2) ,@precio2 numeric(18,2)
+	 insert into CRISPI.Cupones(cupones_oferta_id,cupones_precio_oferta,cupones_precio_lista,cupones_cliente_id,cupones_estado_id)
+	 values(@oferta,@precio,@precio2,@cliente,1)
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+	throw;
+end catch
+go
+
+create procedure CRISPI.proc_mostrar_ofertas
+as
+
+
+	select oferta_id,oferta_descripcion from CRISPI.Oferta
+	where YEAR(GETDATE())<=YEAR(oferta_fecha_inicio) and MONTH(GETDATE())<=MONTH(oferta_fecha_inicio)  
+
+
+go
+
+create procedure CRISPI.proc_mostrar_rubro
+as
+
+
+	select rubro_id,rubro_nombre from CRISPI.Rubro
+	
+
+go
+
+create procedure CRISPI.facturar
+@proveedor int ,
+@fecha datetime
+as
+begin try
+	begin transaction
+		insert into CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_proveedor_id,facturacion_fecha,facturacion_monto)
+		values()
+		insert into CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id,item_factura_cantidad)
+		select * from CRISPI.Venta join CRISPI.Oferta on venta_oferta_id=oferta_id
+		where oferta_proveedor_id=@proveedor and year(venta_fecha)=year(@fecha) and month(venta_fecha)=month(@fecha)
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+	throw;
+end catch
+go
+
+
+
