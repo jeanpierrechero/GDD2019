@@ -417,3 +417,6 @@ BEGIN CATCH
 	rollback    
 END CATCH
 GO
+
+--exec CRISPI.proc_create_tables
+

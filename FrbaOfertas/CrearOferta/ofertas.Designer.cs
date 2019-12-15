@@ -50,11 +50,9 @@
             this.eliminaroferta = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.proveedor_id = new conexionsql.errorbox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.usuario_id = new conexionsql.errorbox();
             this.label12 = new System.Windows.Forms.Label();
             this.rubro = new System.Windows.Forms.ComboBox();
+            this.rs = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,7 +88,7 @@
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1001, 273);
+            this.dataGridView1.Size = new System.Drawing.Size(1130, 273);
             this.dataGridView1.TabIndex = 4;
             // 
             // label3
@@ -269,35 +267,9 @@
             this.label10.ForeColor = System.Drawing.Color.White;
             this.label10.Location = new System.Drawing.Point(57, 258);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(92, 17);
+            this.label10.Size = new System.Drawing.Size(84, 17);
             this.label10.TabIndex = 23;
-            this.label10.Text = "proveedor_id";
-            // 
-            // proveedor_id
-            // 
-            this.proveedor_id.chequear = false;
-            this.proveedor_id.Location = new System.Drawing.Point(177, 255);
-            this.proveedor_id.Name = "proveedor_id";
-            this.proveedor_id.Size = new System.Drawing.Size(121, 22);
-            this.proveedor_id.TabIndex = 24;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(366, 260);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(74, 17);
-            this.label11.TabIndex = 25;
-            this.label11.Text = "usuario_id";
-            // 
-            // usuario_id
-            // 
-            this.usuario_id.chequear = false;
-            this.usuario_id.Location = new System.Drawing.Point(474, 257);
-            this.usuario_id.Name = "usuario_id";
-            this.usuario_id.Size = new System.Drawing.Size(130, 22);
-            this.usuario_id.TabIndex = 26;
+            this.label10.Text = "razon social";
             // 
             // label12
             // 
@@ -317,17 +289,23 @@
             this.rubro.Size = new System.Drawing.Size(149, 24);
             this.rubro.TabIndex = 28;
             // 
+            // rs
+            // 
+            this.rs.FormattingEnabled = true;
+            this.rs.Location = new System.Drawing.Point(177, 251);
+            this.rs.Name = "rs";
+            this.rs.Size = new System.Drawing.Size(199, 24);
+            this.rs.TabIndex = 29;
+            // 
             // ofertas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(32)))), ((int)(((byte)(42)))));
-            this.ClientSize = new System.Drawing.Size(1039, 754);
+            this.ClientSize = new System.Drawing.Size(1159, 754);
+            this.Controls.Add(this.rs);
             this.Controls.Add(this.rubro);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.usuario_id);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.proveedor_id);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.eliminaroferta);
@@ -383,10 +361,8 @@
         private System.Windows.Forms.Button eliminaroferta;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private conexionsql.errorbox proveedor_id;
-        private System.Windows.Forms.Label label11;
-        private conexionsql.errorbox usuario_id;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox rubro;
+        private System.Windows.Forms.ComboBox rs;
     }
 }

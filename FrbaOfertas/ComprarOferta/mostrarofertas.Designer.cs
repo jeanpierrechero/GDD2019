@@ -59,6 +59,7 @@
             this.cliente = new conexionsql.errorbox();
             this.label9 = new System.Windows.Forms.Label();
             this.errorbox2 = new conexionsql.errorbox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ofertasagregadas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -346,12 +347,23 @@
             this.errorbox2.Size = new System.Drawing.Size(175, 22);
             this.errorbox2.TabIndex = 25;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(405, 203);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "filtrar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // mostrarofertas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(32)))), ((int)(((byte)(42)))));
             this.ClientSize = new System.Drawing.Size(1063, 635);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.errorbox2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.cliente);
@@ -416,5 +428,6 @@
         private System.Windows.Forms.Label label9;
         private conexionsql.errorbox cliente;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button1;
     }
 }

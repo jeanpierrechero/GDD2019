@@ -3,3 +3,8 @@ C:\Users\omar coca mariscal\Desktop\tp\GDD2019\conexionsql\bin\Debug\conexionsql
 C:\Users\omar coca mariscal\Desktop\tp\GDD2019\conexionsql\obj\Debug\conexionsql.csprojAssemblyReference.cache
 C:\Users\omar coca mariscal\Desktop\tp\GDD2019\conexionsql\obj\Debug\conexionsql.dll
 C:\Users\omar coca mariscal\Desktop\tp\GDD2019\conexionsql\obj\Debug\conexionsql.pdb
+C:\Users\omar coca mariscal\Desktop\GDD2019\conexionsql\bin\Debug\conexionsql.dll
+C:\Users\omar coca mariscal\Desktop\GDD2019\conexionsql\bin\Debug\conexionsql.pdb
+C:\Users\omar coca mariscal\Desktop\GDD2019\conexionsql\obj\Debug\conexionsql.csprojAssemblyReference.cache
+C:\Users\omar coca mariscal\Desktop\GDD2019\conexionsql\obj\Debug\conexionsql.dll
+C:\Users\omar coca mariscal\Desktop\GDD2019\conexionsql\obj\Debug\conexionsql.pdb
