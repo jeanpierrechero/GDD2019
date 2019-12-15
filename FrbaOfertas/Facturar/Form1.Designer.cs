@@ -56,6 +56,7 @@
             this.proveedores.Name = "proveedores";
             this.proveedores.Size = new System.Drawing.Size(190, 21);
             this.proveedores.TabIndex = 1;
+            this.proveedores.SelectedIndexChanged += new System.EventHandler(this.proveedores_SelectedIndexChanged);
             // 
             // fecha_inicio
             // 
@@ -100,16 +101,6 @@
             this.dgv_ofertas.Name = "dgv_ofertas";
             this.dgv_ofertas.Size = new System.Drawing.Size(878, 230);
             this.dgv_ofertas.TabIndex = 6;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(15, 125);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Ver Ofertas";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.ver_ofertas);
             // 
             // button2
             // 
