@@ -36,18 +36,12 @@ namespace FrbaOfertas.Facturar
             fecha_fin.Format = DateTimePickerFormat.Custom;
         }
 
-        private void ver_ofertas(object sender, EventArgs e)
+        private void proveedores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                DataView dv = ds.Tables[0].DefaultView;
-                dv.RowFilter = string.Format("fecha_compra >= '{0}' and fecha_compra >= '{1}'", fecha_inicio, fecha_fin);
-                dgv_ofertas.DataSource = dv;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            string instruccion = string.Format("select distinct razon_social from CRISPI.view_proveedores");
+            DataSet ds = utilidades.ejecutar(instruccion);
+            proveedores.DataSource = ds.Tables[0].DefaultView;
+            proveedores.ValueMember = "razon_social";
         }
     }
 }
