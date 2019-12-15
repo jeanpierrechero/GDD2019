@@ -68,6 +68,7 @@ namespace FrbaOfertas
             this.listadoClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ofertasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.procesosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comprarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.facturacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ofertasToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,6 +100,7 @@ namespace FrbaOfertas
             this.viewMenu,
             this.mantenimientoToolStripMenuItem,
             this.procesosToolStripMenuItem,
+            this.comprarToolStripMenuItem,
             this.consultarToolStripMenuItem,
             this.contraseñaToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
@@ -327,7 +329,20 @@ namespace FrbaOfertas
             {
                 this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.clienteToolStripMenuItem });
             }
-            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.ofertasToolStripMenuItem});
+            if (Permission.hasPermission(_session.rol_id, "VISUALIZAR_OFERTA"))
+            {
+                this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.ofertasToolStripMenuItem });
+            }
+            if (Permission.hasPermission(_session.rol_id, "COMPRAR_OFERTA"))
+            {
+                this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.comprarToolStripMenuItem });
+            }
+
+            this.comprarToolStripMenuItem.Name = "comprarToolStripMenuItem";
+            this.comprarToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.comprarToolStripMenuItem.Text = "comprar";
+            this.comprarToolStripMenuItem.Click += new System.EventHandler(this.comprarToolStripMenuItem_Click);
+
             this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
             this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
             this.mantenimientoToolStripMenuItem.Text = "mantenimiento";
@@ -602,6 +617,7 @@ namespace FrbaOfertas
         private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ofertasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem procesosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem comprarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem facturacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ofertasToolStripMenuItem1;

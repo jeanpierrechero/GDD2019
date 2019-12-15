@@ -136,7 +136,7 @@ namespace FrbaOfertas
 
         private void ofertasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ComprarOferta.ofertas ofertanueva = new ComprarOferta.ofertas();
+            ComprarOferta.ofertas ofertanueva = new ComprarOferta.ofertas(sesion);
             ofertanueva.MdiParent = this;
             ofertanueva.Show();
         }
@@ -149,7 +149,14 @@ namespace FrbaOfertas
 
         private void facturacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ComprarOferta.mostrarofertas a = new ComprarOferta.mostrarofertas();
+            ComprarOferta.mostrarofertas a = new ComprarOferta.mostrarofertas(sesion);
+            a.MdiParent = this;
+            a.Show();
+        }
+
+        private void comprarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ComprarOferta.mostrarofertas a = new ComprarOferta.mostrarofertas(sesion);
             a.MdiParent = this;
             a.Show();
         }

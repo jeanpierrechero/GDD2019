@@ -8,15 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using conexionsql;
+using FrbaOfertas.Models;
 namespace FrbaOfertas.ComprarOferta
 {
     public partial class mostrarofertas : Form
     {
         public static int contador_fila=0;
         public static double total ;
-        public mostrarofertas()
+        private Session sesion;
+        public mostrarofertas(Session session)
         {
             InitializeComponent();
+            this.sesion = session;
         }
 
         private void mostrarofertas_Load(object sender, EventArgs e)
@@ -25,7 +28,14 @@ namespace FrbaOfertas.ComprarOferta
             ofertas.DataSource = utilidades.ejecutar(instruccion).Tables[0];
             ofertas.DisplayMember = "oferta_descripcion";
             ofertas.ValueMember = "oferta_id";
-           
+
+            string instruccion1 = string.Format("exec CRISPI.proc_mostrar_rubro");
+            rubro.DataSource = utilidades.ejecutar(instruccion1).Tables[0];
+            rubro.DisplayMember = "rubro_nombre";
+            rubro.ValueMember = "rubro_id";
+            cliente.Text = sesion.cliente_id.ToString();
+            
+
 
             //string instruccion1 = string.Format("select rubro_nombre from CRISPI.Rubro");
             //rubro.DataSource = utilidades.ejecutar(instruccion1).Tables[0].DefaultView;
@@ -105,16 +115,24 @@ namespace FrbaOfertas.ComprarOferta
         private void rubro_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            string instruccion = string.Format("select oferta_descripcion from CRISPI.Oferta join CRISPI.Rubro_Proveedor on oferta_rubro_proveedor=rubro_proveedor_id join CRISPI.Rubro r on rubro_id=r.rubro_id where rubro_id='{0}'",rubro.SelectedValue.ToString());
-            ofertas.DataSource = utilidades.ejecutar(instruccion).Tables[0];
+            
 
         }
 
         private void buttoncomprar_Click(object sender, EventArgs e)
         {
-            string instruccion = string.Format("exec CRISPI_procedure_comprar_oferta '{0}','{1}','{2}'",ofertas.SelectedValue.ToString(),cliente.Text,errorbox2.Text);
+            string instruccion = string.Format("exec CRISPI.proc_comprar_oferta '{0}','{1}','{2}'",ofertas.SelectedValue.ToString(),cliente.Text,errorbox2.Text);
             utilidades.ejecutar(instruccion);
             
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string instruccion = string.Format("select oferta_id,oferta_descripcion from CRISPI.Oferta s join CRISPI.Rubro_Proveedor p on s.oferta_rubro_proveedor_id=p.rubro_proveedor_id join CRISPI.Rubro r on p.rubro_id=r.rubro_id where r.rubro_id='{0}'", rubro.SelectedValue.ToString());
+            ofertas.DataSource = utilidades.ejecutar(instruccion).Tables[0];
+            ofertas.DisplayMember = "oferta_descripcion";
+            ofertas.ValueMember = "oferta_id";
 
         }
     }

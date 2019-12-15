@@ -20,6 +20,8 @@ BEGIN
 END
 GO
 
+ 
+
 
 create  function CRISPI.hasPermission (@rol_id int,@name_permission nvarchar(50))
 RETURNS bit
@@ -108,6 +110,23 @@ begin catch
 	rollback transaction
 end catch
 GO
+
+create procedure CRISPI.proc_inabilitar 
+@u nvarchar(50)
+as
+begin try
+	begin transaction
+		update CRISPI.Usuario
+		set usuario_estado=0
+		where usuario_username=@u  
+		 
+		
+	commit transaction
+end try
+begin catch
+	rollback transaction
+end catch
+go
 
 
 create  procedure CRISPI.proc_update_cliente
@@ -233,9 +252,10 @@ begin try
 	values(@codigooferta,@descripcion,@precio,@preciolista,@cantidad,@maximo,@fechainicio,@fechafin,@r,@usuario);
 	commit transaction
 end try
+begin catch
 	rollback transaction
 	throw;
-begin catch
+end catch
 GO	
 
 create procedure CRISPI.proc_update_proveedor
@@ -258,6 +278,7 @@ begin try
 		proveedor_mail=@mail,proveedor_ciudad_id=@ciudad_id,proveedor_telefono=@telefono
 	where proveedor_id = @id;
 end try	
+begin catch
 	rollback transaction
 	throw;
 end catch
@@ -353,13 +374,29 @@ as
 
 go
 
-create procedure CRISPI.proc_mostrar_rubro
+create procedure CRISPI.proc_ofertas
+@u int
 as
-
-
-	select rubro_id,rubro_nombre from CRISPI.Rubro
 	
 
+	select oferta_id,oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_eliminado,oferta_rubro_proveedor_id from CRISPI.Oferta join CRISPI.Rubro_Proveedor on oferta_rubro_proveedor_id=rubro_proveedor_id 
+	where rubro_proveedor=@u
+	--where YEAR(GETDATE())<=YEAR(oferta_fecha_inicio) and MONTH(GETDATE())<=MONTH(oferta_fecha_inicio) and oferta_eliminado=0  
+
+
+go
+select * from CRISPI.Rol
+
+create procedure CRISPI.proc_mostrar_rubro
+as
+	select rubro_id,rubro_nombre from CRISPI.Rubro
+	
+go
+
+create procedure CRISPI.proc_mostrar_proveedor
+as
+	select proveedor_id,proveedor_rs from CRISPI.Proveedor
+	
 go
 
 create procedure CRISPI.facturar
@@ -396,3 +433,11 @@ begin catch
 	rollback transaction
 end catch
 go
+select * from CRISPI.Funcionalidad 
+
+select * from CRISPI.Oferta join CRISPI.Rubro_Proveedor on oferta_rubro_proveedor_id=rubro_proveedor_id where rubro_id=2
+
+select * from CRISPI.Rol
+select r.rubro_id,r.rubro_nombre from CRISPI.Rubro_Proveedor p join CRISPI.Rubro r on p.rubro_id=r.rubro_id where p.rubro_proveedor= 
+
+select rubro_proveedor_id from CRISPI.Rubro_Proveedor s join CRISPI.Proveedor p on s.rubro_proveedor=p.proveedor_id   where r.rubro_id= and p.proveedor_rs=

@@ -262,7 +262,8 @@ BEGIN TRY
 		('ALTA_PROVEEDOR'),
 		('EDITAR_PROVEEDOR'),
 		('ELIMINAR_PROVEEDOR'),
-		('VISUALIZAR_LISTADO_ESTADISTICO')
+		('VISUALIZAR_LISTADO_ESTADISTICO'),
+		('COMPRAR_OFERTA')
 
 	PRINT 'Funcionalidades creadas correctamente'
 
@@ -271,7 +272,16 @@ BEGIN TRY
 	INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
 	(SELECT 1, funcionalidad_id FROM CRISPI.Funcionalidad);
 	PRINT 'Funcionalidades asignadas a los roles correctamente'
+	
+	PRINT 'Asignando funcionalidad a los roles'
+	INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
+	(SELECT 2, funcionalidad_id FROM CRISPI.Funcionalidad where funcionalidad_id=8 or funcionalidad_id=18 );
+	PRINT 'Funcionalidades asignadas a los roles correctamente'
 
+	PRINT 'Asignando funcionalidad a los roles'
+	INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
+	(SELECT 3, funcionalidad_id FROM CRISPI.Funcionalidad where funcionalidad_id in (5,6,7) );
+	PRINT 'Funcionalidades asignadas a los roles correctamente'
 
 	PRINT 'Migracion de ciudades'
 	INSERT INTO CRISPI.Ciudad(ciudad_nombre)
