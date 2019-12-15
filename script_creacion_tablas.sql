@@ -156,7 +156,8 @@ BEGIN TRY
 		venta_oferta_id int NOT NULL,
 		venta_cliente_id int NOT NULL,
 		venta_fecha datetime,
-		venta_cliente_destino_id int NOT NULL
+		venta_cliente_destino_id int NOT NULL,
+		venta_cantidad int not null
 	)
 
 	ALTER TABLE CRISPI.Usuario ADD CONSTRAINT fk_usuario_cliente_id FOREIGN KEY (usuario_cliente_id) REFERENCES CRISPI.Cliente(cliente_id);
@@ -288,7 +289,12 @@ BEGIN TRY
 	(SELECT Cli_Ciudad
 	FROM gd_esquema.Maestra
 	WHERE Cli_Ciudad IS NOT NULL
-	group by Cli_Ciudad);
+	group by Cli_Ciudad)
+	union 
+	(SELECT Provee_Ciudad 
+	FROM gd_esquema.Maestra
+	WHERE Provee_Ciudad IS NOT NULL
+	group by Provee_Ciudad);
 	PRINT 'Ciudades migrados correctamente'
 
 
@@ -321,9 +327,9 @@ BEGIN TRY
 
 	PRINT 'Migracion de  Proveedores'
 	INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_dom,proveedor_rs,proveedor_telefono,proveedor_ciudad_id,proveedor_estado)
-	SELECT DISTINCT Provee_CUIT,Provee_Dom,Provee_RS,Provee_Telefono,a.ciudad_id,1
-	FROM gd_esquema.Maestra m ,CRISPI.Ciudad a
-	WHERE m.Provee_CUIT IS NOT NULL AND m.Provee_Ciudad=a.ciudad_nombre
+	SELECT DISTINCT Provee_CUIT,Provee_Dom,Provee_RS,Provee_Telefono,(select ciudad_id from CRISPI.Ciudad c where c.ciudad_nombre = m.Provee_Ciudad),1
+	FROM gd_esquema.Maestra m
+	WHERE m.Provee_RS IS NOT NULL
 	PRINT 'Proveedores migrados correctamente'
 
 
@@ -347,9 +353,9 @@ BEGIN TRY
 	INSERT INTO CRISPI.Oferta(oferta_codigo,oferta_descripcion,oferta_precio,oferta_lista,oferta_cantidad,oferta_maxima,oferta_fecha_inicio,oferta_fecha_fin,oferta_rubro_proveedor_id)
 	SELECT Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,1,Oferta_Fecha,Oferta_Fecha_Venc,rp.rubro_proveedor_id
 	FROM gd_esquema.Maestra m
-	join CRISPI.Proveedor p on p.proveedor_cuit = m.Provee_CUIT
+	join CRISPI.Proveedor p on p.proveedor_rs = m.Provee_RS
 	join CRISPI.Rubro r on r.rubro_nombre = m.Provee_Rubro	
-	join CRISPI.Rubro_Proveedor rp on rp.rubro_proveedor_id = p.proveedor_id and rp.rubro_id = r.rubro_id
+	join CRISPI.Rubro_Proveedor rp on rp.rubro_proveedor = p.proveedor_id and rp.rubro_id = r.rubro_id
 	where m.Oferta_Codigo is not null
 	group by Oferta_Codigo,Oferta_Descripcion,Oferta_Precio,Oferta_Precio_Ficticio,Oferta_Cantidad,Oferta_Fecha,Oferta_Fecha_Venc,rp.rubro_proveedor_id
 	PRINT 'oferta migrados correctamente'
@@ -381,11 +387,23 @@ BEGIN TRY
 
 	PRINT 'Migracion cupones'
 	INSERT INTO CRISPI.Cupones(cupones_oferta_id,cupones_precio_oferta,cupones_precio_lista,cupones_cliente_id,cupones_estado_id)
-	select distinct o.oferta_id,m.Oferta_Precio,m.Oferta_Precio_Ficticio,c.cliente_id,1
+	select o.oferta_id,m.Oferta_Precio,m.Oferta_Precio_Ficticio,c.cliente_id,1
 	from gd_esquema.Maestra m,CRISPI.Oferta o,CRISPI.Cliente c
-	where m.Factura_Nro is not null and m.Oferta_Codigo=o.oferta_codigo and m.Cli_Dni=c.cliente_dni
+	where m.Factura_Nro is null and m.Oferta_Codigo=o.oferta_codigo and m.Cli_Dni=c.cliente_dni 
+		and m.Oferta_Fecha_Compra is not null and m.Oferta_Entregado_Fecha is null
 	PRINT 'migrados correctamente'	
-
+	
+	PRINT 'Migracion Ventas'
+	INSERT INTO CRISPI.Venta(venta_oferta_id,venta_cliente_id,venta_fecha,venta_cliente_destino_id,venta_cantidad)
+	select distinct o.oferta_id,c.cliente_id,m.Oferta_Fecha_Compra,null as cliente_destino,
+		(select count(1) from gd_esquema.Maestra m2
+		where m2.Oferta_Codigo = m.Oferta_Codigo and m2.Cli_Dni = c.cliente_dni and m2.Factura_Nro is null and
+			m2.Oferta_Entregado_Fecha is null and Oferta_Fecha_Compra is not null and m2.Oferta_Fecha_Compra = m.Oferta_Fecha_Compra
+			) as cantidad
+	from gd_esquema.Maestra m
+	join CRISPI.Oferta o on o.oferta_codigo = m.Oferta_Codigo
+	join CRISPI.Cliente c on c.cliente_dni = m.Cli_Dni
+	where m.Factura_Nro is null and Oferta_Entregado_Fecha is null and Oferta_Fecha_Compra is not null
 	commit transaction
 END TRY
 BEGIN CATCH	
@@ -399,8 +417,3 @@ BEGIN CATCH
 	rollback    
 END CATCH
 GO
-
-
-
-exec CRISPI.proc_create_tables
-

@@ -45,8 +45,13 @@ namespace FrbaOfertas.AbmCliente
         {
             try
             {
-                string instruccion = string.Format("EXEC CRISPI.proc_create_usuario_cliente '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}'", nuevonombre.Text.Trim(), nuevoapellido.Text.Trim(), nuevousuario.Text.Trim(),
-                    nuevocontraseña.Text.Trim(), nuevofecha.Text.Trim(), nuevodni.Text.Trim(), nuevodireccion.Text.Trim(), ciudad.Text.Trim(), nuevocodigo.Text.Trim(),nuevotelefono.Text.Trim(), nuevomail.Text.Trim());
+                bool estado = check_estado.Checked;
+                int tipo_estado = 0;
+                if (estado) {
+                    tipo_estado = 1;
+                }
+                string instruccion = string.Format("EXEC CRISPI.proc_create_usuario_cliente '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}'", nuevonombre.Text.Trim(), nuevoapellido.Text.Trim(), nuevousuario.Text.Trim(),
+                    nuevocontraseña.Text.Trim(), nuevofecha.Text.Trim(), nuevodni.Text.Trim(), nuevodireccion.Text.Trim(), ciudad.Text.Trim(), nuevocodigo.Text.Trim(), nuevotelefono.Text.Trim(), nuevomail.Text.Trim(), tipo_estado);
                 utilidades.ejecutar(instruccion);
                 MessageBox.Show("guardado");
             }
@@ -54,6 +59,12 @@ namespace FrbaOfertas.AbmCliente
             {
                 MessageBox.Show(error.Message);
             }
+        }
+
+        private void nuevofecha_ValueChanged(object sender, EventArgs e)
+        {
+            nuevofecha.CustomFormat = "yyyy-MM-dd hh:mm:ss";
+            nuevofecha.Format = DateTimePickerFormat.Custom; 
         }
     }
 }

@@ -1,4 +1,3 @@
-
 create  FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
 RETURNS int
 AS 
@@ -12,11 +11,10 @@ BEGIN
 	FROM CRISPI.Usuario
 	WHERE usuario_username = @username and usuario_password = @pass_enc and usuario_habilitado = 1 and usuario_estado = 1)
 	begin
-		RETURN 1
+		RETURN 1;
 	end
 	
-	RETURN 0
-
+	RETURN 0;
 END
 GO
 
@@ -33,10 +31,10 @@ BEGIN
 
 	IF EXISTS(select 1 from CRISPI.Rol_Por_Funcionalidad where rol_id = @rol_id and funcionalidad_id = @funcionalidad_id)
 	begin
-		RETURN 1
+		RETURN 1;
 	end
 	
-	RETURN 0
+	RETURN 0;
 
 END
 GO
@@ -53,17 +51,18 @@ create  procedure CRISPI.proc_create_usuario_cliente
 	@ciudad_nombre nvarchar(255),
 	@codigo_postal int,
 	@telefono numeric(18,0),
-	@mail nvarchar(255)
+	@mail nvarchar(255),
+	@estado bit
 as
 begin try
 	begin transaction
 	declare @id_usuario int;
 	declare @id_cliente int;
 
-	exec CRISPI.proc_create_cliente @nombre,@apellido,@dni,@fecha_nacimiento,@direccion,@ciudad_nombre,@mail,@telefono,@codigo_postal,@id = @id_cliente output;
+	exec CRISPI.proc_create_cliente @nombre,@apellido,@dni,@fecha_nacimiento,@direccion,@ciudad_nombre,@mail,@telefono,@codigo_postal,@estado,@id = @id_cliente output;
 		
 	INSERT INTO CRISPI.Usuario(usuario_username,usuario_password,usuario_cliente_id,usuario_habilitado,usuario_estado,usuario_cantidad_errores)
-	values(@username,HASHBYTES('SHA2_256', CONVERT(nvarchar(50), @password)),@id_cliente,1,1,0);
+	values(@username,HASHBYTES('SHA2_256', CONVERT(nvarchar(50), @password)),@id_cliente,1,@estado,0);
 	SET @id_usuario=SCOPE_IDENTITY();
 
 	INSERT INTO CRISPI.Rol_Por_Usuario(usuario_id,rol_id)
@@ -72,7 +71,7 @@ begin try
 	commit transaction
 end try
 begin catch
-	rollback transaction
+	rollback
 end catch
 GO
 
@@ -87,6 +86,7 @@ create  procedure CRISPI.proc_create_cliente
 	@mail nvarchar(255),
 	@telefono numeric(18,0),
 	@codigo_postal int,
+	@estado bit,
 	@id int output
 
 as
@@ -99,8 +99,8 @@ begin try
 	
 	INSERT INTO CRISPI.Cliente(cliente_nombre,cliente_apellido,cliente_dni,cliente_mail,cliente_telefono,
 								cliente_direccion,cliente_fechanac,cliente_ciudad_id,cliente_codigo_postal,
-								cliente_credito)
-	values(@nombre,@apellido,@dni,@mail,@telefono,@direccion,@fecha_nacimiento,@ciudad_id,@codigo_postal,200)
+								cliente_credito,cliente_estado)
+	values(@nombre,@apellido,@dni,@mail,@telefono,@direccion,@fecha_nacimiento,@ciudad_id,@codigo_postal,200,@estado);
 	SET @id=SCOPE_IDENTITY();
 
 	commit transaction
@@ -139,6 +139,7 @@ create  procedure CRISPI.proc_update_cliente
 	@mail nvarchar(255),
 	@telefono numeric(18,0),
 	@codigo_postal int,
+	@estado bit,
 	@id int
 
 as
@@ -150,7 +151,7 @@ begin try
 	set @ciudad_id = (select top 1 ciudad_id from CRISPI.Ciudad where ciudad_nombre = @ciudad_nombre);
 		
 	update CRISPI.Cliente set cliente_nombre=@nombre,cliente_apellido=@apellido,cliente_dni=@dni,cliente_mail=@mail,cliente_telefono=@telefono,
-								cliente_direccion=@direccion,cliente_fechanac = @fecha_nacimiento,cliente_ciudad_id=@ciudad_id,cliente_codigo_postal=@codigo_postal
+								cliente_direccion=@direccion,cliente_fechanac = @fecha_nacimiento,cliente_ciudad_id=@ciudad_id,cliente_codigo_postal=@codigo_postal,cliente_estado = @estado
 	where cliente_id = @id
 
 	commit transaction
@@ -253,7 +254,9 @@ begin try
 	commit transaction
 end try
 begin catch
+
 	rollback transaction
+
 	throw;
 end catch
 GO	
@@ -399,26 +402,6 @@ as
 	
 go
 
-create procedure CRISPI.facturar
-@proveedor int ,
-@fecha datetime
-as
-begin try
-	begin transaction
-		insert into CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_proveedor_id,facturacion_fecha,facturacion_monto)
-		values()
-		insert into CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id,item_factura_cantidad)
-		select * from CRISPI.Venta join CRISPI.Oferta on venta_oferta_id=oferta_id
-		where oferta_proveedor_id=@proveedor and year(venta_fecha)=year(@fecha) and month(venta_fecha)=month(@fecha)
-		commit transaction
-end try
-begin catch
-	rollback transaction
-end catch
-
-go
-
-
 create  procedure CRISPI.proc_insert_rol_proveedor(@rubro_id int,@proveedor_id int)
 as
 begin try
@@ -433,11 +416,23 @@ begin catch
 	rollback transaction
 end catch
 go
-select * from CRISPI.Funcionalidad 
 
-select * from CRISPI.Oferta join CRISPI.Rubro_Proveedor on oferta_rubro_proveedor_id=rubro_proveedor_id where rubro_id=2
+/*
+create procedure CRISPI.facturar
+	@fecha datetime
+as
+begin try
+	begin transaction
+		insert into CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_proveedor_id,facturacion_fecha,facturacion_monto)
+		values()
+		insert into CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id,item_factura_cantidad)
+		select * from CRISPI.Venta join CRISPI.Oferta on venta_oferta_id=oferta_id
+		where oferta_proveedor_id=@proveedor and year(venta_fecha)=year(@fecha) and month(venta_fecha)=month(@fecha)
+		commit transaction
+end try
+begin catch
+	rollback transaction
+end catch
 
-select * from CRISPI.Rol
-select r.rubro_id,r.rubro_nombre from CRISPI.Rubro_Proveedor p join CRISPI.Rubro r on p.rubro_id=r.rubro_id where p.rubro_proveedor= 
+go*/
 
-select rubro_proveedor_id from CRISPI.Rubro_Proveedor s join CRISPI.Proveedor p on s.rubro_proveedor=p.proveedor_id   where r.rubro_id= and p.proveedor_rs=

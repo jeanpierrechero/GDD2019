@@ -51,6 +51,8 @@
             this.agregarnuevo = new System.Windows.Forms.Button();
             this.ciudad = new System.Windows.Forms.ComboBox();
             this.nuevofecha = new System.Windows.Forms.DateTimePicker();
+            this.check_estado = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -194,6 +196,7 @@
             this.nuevocontraseña.Name = "nuevocontraseña";
             this.nuevocontraseña.Size = new System.Drawing.Size(211, 20);
             this.nuevocontraseña.TabIndex = 14;
+            this.nuevocontraseña.UseSystemPasswordChar = true;
             // 
             // nuevodni
             // 
@@ -261,12 +264,34 @@
             this.nuevofecha.Name = "nuevofecha";
             this.nuevofecha.Size = new System.Drawing.Size(211, 20);
             this.nuevofecha.TabIndex = 24;
+            this.nuevofecha.ValueChanged += new System.EventHandler(this.nuevofecha_ValueChanged);
+            // 
+            // check_estado
+            // 
+            this.check_estado.AutoSize = true;
+            this.check_estado.Location = new System.Drawing.Point(266, 456);
+            this.check_estado.Name = "check_estado";
+            this.check_estado.Size = new System.Drawing.Size(15, 14);
+            this.check_estado.TabIndex = 51;
+            this.check_estado.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(59, 456);
+            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 13);
+            this.label12.TabIndex = 50;
+            this.label12.Text = "habilitado";
             // 
             // nuevo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(598, 555);
+            this.Controls.Add(this.check_estado);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.nuevofecha);
             this.Controls.Add(this.ciudad);
             this.Controls.Add(this.agregarnuevo);
@@ -323,5 +348,7 @@
         private System.Windows.Forms.Button agregarnuevo;
         private System.Windows.Forms.ComboBox ciudad;
         private System.Windows.Forms.DateTimePicker nuevofecha;
+        private System.Windows.Forms.CheckBox check_estado;
+        private System.Windows.Forms.Label label12;
     }
 }
