@@ -34,3 +34,16 @@ select u.usuario_id as id, u.usuario_username as username, r.rol_id as rol_id,u.
 from CRISPI.Usuario u
 join CRISPI.Rol_Por_Usuario r on r.usuario_id = u.usuario_id
 GO
+
+
+IF OBJECT_ID('CRISPI.ofertas_facturas', 'V') IS NOT NULL
+    DROP VIEW CRISPI.ofertas_facturas
+GO
+
+CREATE VIEW CRISPI.ofertas_facturas AS
+select o.oferta_codigo as codigo,o.oferta_descripcion as oferta_descripcion,c.cliente_nombre as cliente_nombre,
+	v.venta_fecha as fecha_compra, v.venta_cantidad as cantidad 
+from CRISPI.Venta v
+join CRISPI.Oferta o on o.oferta_id = v.venta_oferta_id
+join CRISPI.Cliente c on c.cliente_id = v.venta_cliente_id
+GO
