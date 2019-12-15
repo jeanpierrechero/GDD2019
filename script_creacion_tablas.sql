@@ -395,7 +395,7 @@ BEGIN TRY
 	
 	PRINT 'Migracion Ventas'
 	INSERT INTO CRISPI.Venta(venta_oferta_id,venta_cliente_id,venta_fecha,venta_cliente_destino_id,venta_cantidad)
-	select distinct o.oferta_id,c.cliente_id,m.Oferta_Fecha_Compra,null as cliente_destino,
+	select distinct o.oferta_id,c.cliente_id,m.Oferta_Fecha_Compra,c.cliente_id as cliente_destino,
 		(select count(1) from gd_esquema.Maestra m2
 		where m2.Oferta_Codigo = m.Oferta_Codigo and m2.Cli_Dni = c.cliente_dni and m2.Factura_Nro is null and
 			m2.Oferta_Entregado_Fecha is null and Oferta_Fecha_Compra is not null and m2.Oferta_Fecha_Compra = m.Oferta_Fecha_Compra
