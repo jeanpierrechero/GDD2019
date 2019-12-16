@@ -1,4 +1,4 @@
-create  FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
+create FUNCTION CRISPI.func_login (@username NVARCHAR(50),@pass NVARCHAR(50))
 RETURNS int
 AS 
 BEGIN
@@ -39,6 +39,41 @@ BEGIN
 END
 GO
 
+create  procedure CRISPI.proc_create_cliente
+	@nombre nvarchar(255),
+	@apellido nvarchar(255),
+	@dni numeric(18,0),
+	@fecha_nacimiento datetime,
+	@direccion nvarchar(255),
+	@ciudad_nombre nvarchar(255),
+	@mail nvarchar(255),
+	@telefono numeric(18,0),
+	@codigo_postal int,
+	@estado bit,
+	@id int output
+
+as
+begin try
+	begin transaction
+	
+	Declare @ciudad_id int;
+	
+	set @ciudad_id = (select top 1 ciudad_id from CRISPI.Ciudad where ciudad_nombre = @ciudad_nombre);
+	
+	INSERT INTO CRISPI.Cliente(cliente_nombre,cliente_apellido,cliente_dni,cliente_mail,cliente_telefono,
+								cliente_direccion,cliente_fechanac,cliente_ciudad_id,cliente_codigo_postal,
+								cliente_credito,cliente_estado)
+	values(@nombre,@apellido,@dni,@mail,@telefono,@direccion,@fecha_nacimiento,@ciudad_id,@codigo_postal,200,@estado);
+	SET @id=SCOPE_IDENTITY();
+
+	commit transaction
+	RETURN  @id;
+end try
+begin catch
+	rollback transaction
+end catch
+GO
+
 
 create  procedure CRISPI.proc_create_usuario_cliente
 	@nombre nvarchar(255),
@@ -75,41 +110,6 @@ begin catch
 end catch
 GO
 
-
-create  procedure CRISPI.proc_create_cliente
-	@nombre nvarchar(255),
-	@apellido nvarchar(255),
-	@dni numeric(18,0),
-	@fecha_nacimiento datetime,
-	@direccion nvarchar(255),
-	@ciudad_nombre nvarchar(255),
-	@mail nvarchar(255),
-	@telefono numeric(18,0),
-	@codigo_postal int,
-	@estado bit,
-	@id int output
-
-as
-begin try
-	begin transaction
-	
-	Declare @ciudad_id int;
-	
-	set @ciudad_id = (select top 1 ciudad_id from CRISPI.Ciudad where ciudad_nombre = @ciudad_nombre);
-	
-	INSERT INTO CRISPI.Cliente(cliente_nombre,cliente_apellido,cliente_dni,cliente_mail,cliente_telefono,
-								cliente_direccion,cliente_fechanac,cliente_ciudad_id,cliente_codigo_postal,
-								cliente_credito,cliente_estado)
-	values(@nombre,@apellido,@dni,@mail,@telefono,@direccion,@fecha_nacimiento,@ciudad_id,@codigo_postal,200,@estado);
-	SET @id=SCOPE_IDENTITY();
-
-	commit transaction
-	RETURN  @id;
-end try
-begin catch
-	rollback transaction
-end catch
-GO
 
 create procedure CRISPI.proc_inabilitar 
 @u nvarchar(50)
@@ -162,6 +162,35 @@ end catch
 GO
 
 
+create  procedure CRISPI.proc_create_proveedor
+	@cuit nvarchar(20),
+	@razon_social nvarchar(100),
+	@direccion nvarchar(255),
+	@mail nvarchar(255),
+	@ciudad_nombre nvarchar(255),
+	@telefono numeric(18,0),
+	@id int output
+as
+begin try
+	begin transaction
+	
+	Declare @ciudad_id int;
+	
+	set @ciudad_id = (select top 1 ciudad_id from CRISPI.Ciudad where ciudad_nombre = @ciudad_nombre);
+	
+	INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_rs,proveedor_dom,proveedor_mail,proveedor_ciudad_id,proveedor_telefono,proveedor_estado)
+	values(@cuit,@razon_social,@direccion,@mail,@ciudad_id,@telefono,1)
+	SET @id=SCOPE_IDENTITY()
+	
+	commit transaction
+	return @id;
+end try
+begin catch
+	rollback transaction
+    THROW;
+end catch
+GO
+
 
 
 create  procedure CRISPI.proc_create_usuario_proveedor
@@ -200,34 +229,7 @@ end catch
 GO
 
 
-create  procedure CRISPI.proc_create_proveedor
-	@cuit nvarchar(20),
-	@razon_social nvarchar(100),
-	@direccion nvarchar(255),
-	@mail nvarchar(255),
-	@ciudad_nombre nvarchar(255),
-	@telefono numeric(18,0),
-	@id int output
-as
-begin try
-	begin transaction
-	
-	Declare @ciudad_id int;
-	
-	set @ciudad_id = (select top 1 ciudad_id from CRISPI.Ciudad where ciudad_nombre = @ciudad_nombre);
-	
-	INSERT INTO CRISPI.Proveedor(proveedor_cuit,proveedor_rs,proveedor_dom,proveedor_mail,proveedor_ciudad_id,proveedor_telefono,proveedor_estado)
-	values(@cuit,@razon_social,@direccion,@mail,@ciudad_id,@telefono,1)
-	SET @id=SCOPE_IDENTITY()
-	
-	commit transaction
-	return @id;
-end try
-begin catch
-	rollback transaction
-    THROW;
-end catch
-GO
+
 
 create procedure CRISPI.proc_create_oferta
 	@codigooferta nvarchar(50),
@@ -345,7 +347,7 @@ begin catch
 end catch
 go
 
-alter procedure CRISPI.proc_comprar_oferta
+create procedure CRISPI.proc_comprar_oferta
 @oferta int,
 @cliente int,
 --@fecha datetime,
@@ -421,7 +423,7 @@ as
 
 
 go
-select * from CRISPI.Rol
+
 
 create procedure CRISPI.proc_mostrar_rubro
 as

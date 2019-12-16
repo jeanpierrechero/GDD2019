@@ -163,7 +163,7 @@ namespace FrbaOfertas
 
         private void cargarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            CragaCredito.datos a = new CragaCredito.datos(sesion);
             a.MdiParent = this;
             a.Show();
         }
