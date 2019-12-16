@@ -49,17 +49,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.check_estado = new System.Windows.Forms.CheckBox();
-            this.nuevocontraseña = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.nuevousuario = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.btn_cambiar_clave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // nuevofecha
             // 
             this.nuevofecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.nuevofecha.Location = new System.Drawing.Point(288, 198);
+            this.nuevofecha.Location = new System.Drawing.Point(288, 116);
             this.nuevofecha.Name = "nuevofecha";
             this.nuevofecha.Size = new System.Drawing.Size(211, 20);
             this.nuevofecha.TabIndex = 47;
@@ -67,14 +62,14 @@
             // ciudad
             // 
             this.ciudad.FormattingEnabled = true;
-            this.ciudad.Location = new System.Drawing.Point(288, 301);
+            this.ciudad.Location = new System.Drawing.Point(288, 219);
             this.ciudad.Name = "ciudad";
             this.ciudad.Size = new System.Drawing.Size(211, 21);
             this.ciudad.TabIndex = 46;
             // 
             // guardar
             // 
-            this.guardar.Location = new System.Drawing.Point(82, 493);
+            this.guardar.Location = new System.Drawing.Point(82, 411);
             this.guardar.Margin = new System.Windows.Forms.Padding(2);
             this.guardar.Name = "guardar";
             this.guardar.Size = new System.Drawing.Size(116, 29);
@@ -85,7 +80,7 @@
             // 
             // nuevomail
             // 
-            this.nuevomail.Location = new System.Drawing.Point(288, 418);
+            this.nuevomail.Location = new System.Drawing.Point(288, 336);
             this.nuevomail.Margin = new System.Windows.Forms.Padding(2);
             this.nuevomail.Name = "nuevomail";
             this.nuevomail.Size = new System.Drawing.Size(211, 20);
@@ -93,7 +88,7 @@
             // 
             // nuevotelefono
             // 
-            this.nuevotelefono.Location = new System.Drawing.Point(288, 378);
+            this.nuevotelefono.Location = new System.Drawing.Point(288, 296);
             this.nuevotelefono.Margin = new System.Windows.Forms.Padding(2);
             this.nuevotelefono.Name = "nuevotelefono";
             this.nuevotelefono.Size = new System.Drawing.Size(211, 20);
@@ -101,7 +96,7 @@
             // 
             // nuevocodigo
             // 
-            this.nuevocodigo.Location = new System.Drawing.Point(288, 339);
+            this.nuevocodigo.Location = new System.Drawing.Point(288, 257);
             this.nuevocodigo.Margin = new System.Windows.Forms.Padding(2);
             this.nuevocodigo.Name = "nuevocodigo";
             this.nuevocodigo.Size = new System.Drawing.Size(211, 20);
@@ -109,7 +104,7 @@
             // 
             // nuevodireccion
             // 
-            this.nuevodireccion.Location = new System.Drawing.Point(288, 270);
+            this.nuevodireccion.Location = new System.Drawing.Point(288, 188);
             this.nuevodireccion.Margin = new System.Windows.Forms.Padding(2);
             this.nuevodireccion.Name = "nuevodireccion";
             this.nuevodireccion.Size = new System.Drawing.Size(211, 20);
@@ -117,7 +112,7 @@
             // 
             // nuevodni
             // 
-            this.nuevodni.Location = new System.Drawing.Point(288, 235);
+            this.nuevodni.Location = new System.Drawing.Point(288, 153);
             this.nuevodni.Margin = new System.Windows.Forms.Padding(2);
             this.nuevodni.Name = "nuevodni";
             this.nuevodni.Size = new System.Drawing.Size(211, 20);
@@ -142,7 +137,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(79, 310);
+            this.label10.Location = new System.Drawing.Point(79, 228);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(39, 13);
@@ -152,7 +147,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(80, 343);
+            this.label9.Location = new System.Drawing.Point(80, 261);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(70, 13);
@@ -162,7 +157,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(80, 200);
+            this.label8.Location = new System.Drawing.Point(80, 118);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(103, 13);
@@ -172,7 +167,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(80, 380);
+            this.label7.Location = new System.Drawing.Point(80, 298);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 13);
@@ -182,7 +177,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(80, 422);
+            this.label6.Location = new System.Drawing.Point(80, 340);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(25, 13);
@@ -192,7 +187,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(80, 239);
+            this.label5.Location = new System.Drawing.Point(80, 157);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(26, 13);
@@ -202,7 +197,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(79, 274);
+            this.label4.Location = new System.Drawing.Point(79, 192);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(50, 13);
@@ -232,7 +227,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(81, 457);
+            this.label3.Location = new System.Drawing.Point(81, 375);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
@@ -242,71 +237,17 @@
             // check_estado
             // 
             this.check_estado.AutoSize = true;
-            this.check_estado.Location = new System.Drawing.Point(288, 457);
+            this.check_estado.Location = new System.Drawing.Point(288, 375);
             this.check_estado.Name = "check_estado";
             this.check_estado.Size = new System.Drawing.Size(15, 14);
             this.check_estado.TabIndex = 49;
             this.check_estado.UseVisualStyleBackColor = true;
-            // 
-            // nuevocontraseña
-            // 
-            this.nuevocontraseña.Location = new System.Drawing.Point(287, 160);
-            this.nuevocontraseña.Margin = new System.Windows.Forms.Padding(2);
-            this.nuevocontraseña.Name = "nuevocontraseña";
-            this.nuevocontraseña.ReadOnly = true;
-            this.nuevocontraseña.Size = new System.Drawing.Size(211, 20);
-            this.nuevocontraseña.TabIndex = 51;
-            this.nuevocontraseña.UseSystemPasswordChar = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(79, 164);
-            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(60, 13);
-            this.label11.TabIndex = 50;
-            this.label11.Text = "contraseña";
-            // 
-            // nuevousuario
-            // 
-            this.nuevousuario.Location = new System.Drawing.Point(288, 119);
-            this.nuevousuario.Margin = new System.Windows.Forms.Padding(2);
-            this.nuevousuario.Name = "nuevousuario";
-            this.nuevousuario.ReadOnly = true;
-            this.nuevousuario.Size = new System.Drawing.Size(211, 20);
-            this.nuevousuario.TabIndex = 53;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(80, 123);
-            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 13);
-            this.label12.TabIndex = 52;
-            this.label12.Text = "usuario";
-            // 
-            // btn_cambiar_clave
-            // 
-            this.btn_cambiar_clave.Location = new System.Drawing.Point(520, 160);
-            this.btn_cambiar_clave.Name = "btn_cambiar_clave";
-            this.btn_cambiar_clave.Size = new System.Drawing.Size(75, 23);
-            this.btn_cambiar_clave.TabIndex = 54;
-            this.btn_cambiar_clave.Text = "Cambiar";
-            this.btn_cambiar_clave.UseVisualStyleBackColor = true;
-            this.btn_cambiar_clave.Click += new System.EventHandler(this.btn_cambiar_clave_Click);
             // 
             // edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 538);
-            this.Controls.Add(this.btn_cambiar_clave);
-            this.Controls.Add(this.nuevousuario);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.nuevocontraseña);
-            this.Controls.Add(this.label11);
             this.Controls.Add(this.check_estado);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.nuevofecha);
@@ -358,10 +299,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox check_estado;
-        private System.Windows.Forms.TextBox nuevocontraseña;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox nuevousuario;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button btn_cambiar_clave;
     }
 }

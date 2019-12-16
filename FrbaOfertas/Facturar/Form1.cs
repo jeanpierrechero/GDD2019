@@ -40,16 +40,27 @@ namespace FrbaOfertas.Facturar
 
         private void button1_Click(object sender, EventArgs e)
         {
-            float monto = 0;
-            string instruccion = string.Format("exec CRISPI.mostrar_ofertas_vendidad '{0}','{1}','{2}'", proveedores.Text.Trim(),fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
-            ds = utilidades.ejecutar(instruccion);
-            dgv_ofertas.DataSource = ds.Tables[0].DefaultView;
-            dgv_ofertas.Columns["proveedor_id"].Visible = false;
+            string prove = proveedores.Text.Trim();
+            string f_inicio = fecha_inicio.Text.Trim();
+            string f_fin = fecha_fin.Text.Trim();
 
-            string a = string.Format("select CRISPI.func_monto_factura('{0}','{1}','{2}')", proveedores.Text.Trim(), fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
-            DataSet m = utilidades.ejecutar(a);
-            monto = Convert.ToInt32(m.Tables[0].Rows[0][0]);
-            lbl_monto.Text = monto.ToString();
+            if (String.IsNullOrWhiteSpace(prove) || String.IsNullOrWhiteSpace(f_inicio) || String.IsNullOrWhiteSpace(f_fin))
+            {
+                MessageBox.Show("Los campos fecha inicio, fecha fin y proveedor son obligatorios");
+            }
+            else
+            {
+                float monto = 0;
+                string instruccion = string.Format("exec CRISPI.mostrar_ofertas_vendidad '{0}','{1}','{2}'", proveedores.Text.Trim(), fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
+                ds = utilidades.ejecutar(instruccion);
+                dgv_ofertas.DataSource = ds.Tables[0].DefaultView;
+                dgv_ofertas.Columns["proveedor_id"].Visible = false;
+
+                string a = string.Format("select CRISPI.func_monto_factura('{0}','{1}','{2}')", proveedores.Text.Trim(), fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
+                DataSet m = utilidades.ejecutar(a);
+                monto = Convert.ToInt32(m.Tables[0].Rows[0][0]);
+                lbl_monto.Text = monto.ToString();
+            }
         }
 
         private void fecha_inicio_ValueChanged(object sender, EventArgs e)
@@ -73,9 +84,22 @@ namespace FrbaOfertas.Facturar
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string instruccion = string.Format("exec CRISPI.facturar '{0}','{1}','{2}'", proveedores.Text.Trim(), fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
-            ds = utilidades.ejecutar(instruccion);
-            MessageBox.Show("Ya se generó la factura para el proveedor " + proveedores.Text.Trim());
+
+            string prove = proveedores.Text.Trim();
+            string f_inicio = fecha_inicio.Text.Trim();
+            string f_fin = fecha_fin.Text.Trim();
+
+            if (String.IsNullOrWhiteSpace(prove) || String.IsNullOrWhiteSpace(f_inicio) || String.IsNullOrWhiteSpace(f_fin))
+            {
+                MessageBox.Show("Los campos fecha inicio, fecha fin y proveedor son obligatorios");
+            }
+            else
+            {
+
+                string instruccion = string.Format("exec CRISPI.facturar '{0}','{1}','{2}'", proveedores.Text.Trim(), fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
+                ds = utilidades.ejecutar(instruccion);
+                MessageBox.Show("Ya se generó la factura para el proveedor " + proveedores.Text.Trim());
+            }
         }
     }
 }

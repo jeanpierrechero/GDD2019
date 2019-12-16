@@ -527,4 +527,24 @@ begin catch
 end catch
 
 
+create procedure CRISPI.listado_estadistico_facturas(@semestre int,@anio int)
+as
+begin
+	if(@semestre = 1)
+	begin
+		select top 5 p.proveedor_cuit,p.proveedor_rs from CRISPI.Facturacion f
+		join CRISPI.Proveedor p on p.proveedor_id = f.facturacion_proveedor_id
+		where Year(f.facturacion_fecha) = @anio and MONTH(f.facturacion_fecha) between 1 and 6
+		group by p.proveedor_cuit,p.proveedor_rs
+		order by count(1) desc,sum(f.facturacion_monto) desc
+	end
+	else
+	begin
+		select top 5 p.proveedor_cuit,p.proveedor_rs from CRISPI.Facturacion f
+		join CRISPI.Proveedor p on p.proveedor_id = f.facturacion_proveedor_id
+		where Year(f.facturacion_fecha) = @anio and MONTH(f.facturacion_fecha) between 7 and 12
+		group by p.proveedor_cuit,p.proveedor_rs
+		order by count(1) desc,sum(f.facturacion_monto) desc
+	end
+end
 
