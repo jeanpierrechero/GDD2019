@@ -18,13 +18,7 @@ namespace FrbaOfertas.Facturar
         {
             InitializeComponent();
             inicializarFecha();
-            index();
-        }
-
-        public void index() {
-            string instruccion = string.Format("select * from CRISPI.ofertas_facturas");
-            ds = utilidades.ejecutar(instruccion);
-            dgv_ofertas.DataSource = ds.Tables[0].DefaultView;
+            //index();
         }
 
         public void inicializarFecha()
@@ -36,18 +30,52 @@ namespace FrbaOfertas.Facturar
             fecha_fin.Format = DateTimePickerFormat.Custom;
         }
 
-        private void ver_ofertas(object sender, EventArgs e)
+        private void proveedores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                DataView dv = ds.Tables[0].DefaultView;
-                dv.RowFilter = string.Format("fecha_compra >= '{0}' and fecha_compra >= '{1}'", fecha_inicio, fecha_fin);
-                dgv_ofertas.DataSource = dv;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message);
-            }
+            string instruccion = string.Format("select distinct razon_social from CRISPI.view_proveedores");
+            DataSet ds = utilidades.ejecutar(instruccion);
+            proveedores.DataSource = ds.Tables[0].DefaultView;
+            proveedores.ValueMember = "razon_social";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            float monto = 0;
+            string instruccion = string.Format("exec CRISPI.mostrar_ofertas_vendidad '{0}','{1}','{2}'", proveedores.Text.Trim(),fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
+            ds = utilidades.ejecutar(instruccion);
+            dgv_ofertas.DataSource = ds.Tables[0].DefaultView;
+            dgv_ofertas.Columns["proveedor_id"].Visible = false;
+
+            string a = string.Format("select CRISPI.func_monto_factura('{0}','{1}','{2}')", proveedores.Text.Trim(), fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
+            DataSet m = utilidades.ejecutar(a);
+            monto = Convert.ToInt32(m.Tables[0].Rows[0][0]);
+            lbl_monto.Text = monto.ToString();
+        }
+
+        private void fecha_inicio_ValueChanged(object sender, EventArgs e)
+        {
+            fecha_inicio.CustomFormat = "yyyy-MM-dd";
+            fecha_inicio.Format = DateTimePickerFormat.Custom;
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            inicializarFecha();
+            proveedores.Text = "";
+        }
+
+        private void fecha_fin_ValueChanged(object sender, EventArgs e)
+        {
+            fecha_fin.CustomFormat = "yyyy-MM-dd";
+            fecha_fin.Format = DateTimePickerFormat.Custom;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string instruccion = string.Format("exec CRISPI.facturar '{0}','{1}','{2}'", proveedores.Text.Trim(), fecha_inicio.Text.Trim(), fecha_fin.Text.Trim());
+            ds = utilidades.ejecutar(instruccion);
+            MessageBox.Show("Ya se generó la factura para el proveedor " + proveedores.Text.Trim());
         }
     }
 }
