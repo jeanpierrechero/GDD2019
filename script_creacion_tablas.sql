@@ -264,7 +264,8 @@ BEGIN TRY
 		('EDITAR_PROVEEDOR'),
 		('ELIMINAR_PROVEEDOR'),
 		('VISUALIZAR_LISTADO_ESTADISTICO'),
-		('COMPRAR_OFERTA')
+		('COMPRAR_OFERTA'),
+		('CARGAR_CREDITO')
 
 	PRINT 'Funcionalidades creadas correctamente'
 
@@ -276,7 +277,7 @@ BEGIN TRY
 	
 	PRINT 'Asignando funcionalidad a los roles'
 	INSERT INTO CRISPI.Rol_Por_Funcionalidad (rol_id, funcionalidad_id)
-	(SELECT 2, funcionalidad_id FROM CRISPI.Funcionalidad where funcionalidad_id=8 or funcionalidad_id=18 );
+	(SELECT 2, funcionalidad_id FROM CRISPI.Funcionalidad where funcionalidad_id in(18,19) );
 	PRINT 'Funcionalidades asignadas a los roles correctamente'
 
 	PRINT 'Asignando funcionalidad a los roles'
@@ -418,5 +419,5 @@ BEGIN CATCH
 END CATCH
 GO
 
---exec CRISPI.proc_create_tables
+exec CRISPI.proc_create_tables
 

@@ -324,7 +324,7 @@
             // cliente
             // 
             this.cliente.chequear = false;
-            this.cliente.Location = new System.Drawing.Point(143, 32);
+            this.cliente.Location = new System.Drawing.Point(216, 32);
             this.cliente.Name = "cliente";
             this.cliente.Size = new System.Drawing.Size(175, 22);
             this.cliente.TabIndex = 23;
@@ -335,14 +335,14 @@
             this.label9.ForeColor = System.Drawing.Color.White;
             this.label9.Location = new System.Drawing.Point(54, 86);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(57, 17);
+            this.label9.Size = new System.Drawing.Size(138, 17);
             this.label9.TabIndex = 24;
-            this.label9.Text = "cliente2";
+            this.label9.Text = "DNI_cliente _destino";
             // 
             // errorbox2
             // 
             this.errorbox2.chequear = false;
-            this.errorbox2.Location = new System.Drawing.Point(143, 81);
+            this.errorbox2.Location = new System.Drawing.Point(216, 81);
             this.errorbox2.Name = "errorbox2";
             this.errorbox2.Size = new System.Drawing.Size(175, 22);
             this.errorbox2.TabIndex = 25;

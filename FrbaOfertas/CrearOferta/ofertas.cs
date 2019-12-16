@@ -82,17 +82,41 @@ namespace FrbaOfertas.ComprarOferta
                   MessageBox.Show("error ");
                 }
             }
+            oferta.Text = "";
+            cantidad.Text = "";
+            precio.Text = "";
+            preciolista.Text = "";
+            maximo.Text = "";
+            fechainicio.Text = "";
+            fechafin.Text = "";
+
         }
       
         public void mostrar(Session a)
         {
             if (sesion.proveedor_id != 0)
             {
+                string s = string.Format("exec CRISPI.proc_mostrar_rubro");
+                rubro.DataSource = utilidades.ejecutar(s).Tables[0];
+                rubro.DisplayMember = "rubro_nombre";
+                rubro.ValueMember = "rubro_id";
+                string instruccion1 = string.Format("select proveedor_id,proveedor_rs from CRISPI.Proveedor where proveedor_id='{0}'",sesion.proveedor_id.ToString());
+                rs.DataSource = utilidades.ejecutar(instruccion1).Tables[0];
+                rs.DisplayMember = "proveedor_rs";
+                rs.ValueMember = "proveedor_id";
                 string instruccion = String.Format("exec CRISPI.proc_ofertas '{0}'",a.proveedor_id);
                 dataGridView1.DataSource = utilidades.ejecutar(instruccion).Tables[0];
             }
             else
             {
+                string s = string.Format("exec CRISPI.proc_mostrar_rubro");
+                rubro.DataSource = utilidades.ejecutar(s).Tables[0];
+                rubro.DisplayMember = "rubro_nombre";
+                rubro.ValueMember = "rubro_id";
+                string instruccion1 = string.Format("exec CRISPI.proc_mostrar_proveedor");
+                rs.DataSource = utilidades.ejecutar(instruccion1).Tables[0];
+                rs.DisplayMember = "proveedor_rs";
+                rs.ValueMember = "proveedor_id";
                 string instruccion = String.Format("select * from CRISPI.Oferta");
                 dataGridView1.DataSource = utilidades.ejecutar(instruccion).Tables[0];
             }

@@ -161,6 +161,13 @@ namespace FrbaOfertas
             a.Show();
         }
 
+        private void cargarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            a.MdiParent = this;
+            a.Show();
+        }
+
         private void listadoClienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbmCliente.listado listado = new AbmCliente.listado(sesion);

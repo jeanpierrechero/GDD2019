@@ -121,8 +121,30 @@ namespace FrbaOfertas.ComprarOferta
 
         private void buttoncomprar_Click(object sender, EventArgs e)
         {
-            string instruccion = string.Format("exec CRISPI.proc_comprar_oferta '{0}','{1}','{2}'",ofertas.SelectedValue.ToString(),cliente.Text,errorbox2.Text);
-            utilidades.ejecutar(instruccion);
+            string instruccion1 = string.Format("select cliente_credito from CRISPI.Cliente where cliente_id='{0}'", cliente.Text);
+            Double credito = Convert.ToDouble(utilidades.ejecutar(instruccion1).Tables[0].Rows[0]["cliente_credito"].ToString());
+            Double monto=Convert.ToDouble(total1.Text);
+
+
+            if (credito >= monto)
+            {
+                Double c = credito - monto;
+
+                string instruccion = string.Format("exec CRISPI.proc_comprar_oferta '{0}','{1}','{2}','{3}','{4}'", ofertas.SelectedValue.ToString(), cliente.Text, errorbox2.Text, cantidad.Text,c.ToString());
+                utilidades.ejecutar(instruccion);
+                MessageBox.Show("compra correcta ");
+                codigo.Text = "";
+                precio.Text = "";
+                maximo.Text = "";
+                cantidad.Text = "";
+                total1.Text = "";
+                ofertasagregadas.Rows.RemoveAt(0);
+                
+            }
+            else
+            {
+                MessageBox.Show("credito insuficiente");
+            }
             
 
         }

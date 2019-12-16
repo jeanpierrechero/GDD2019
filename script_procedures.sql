@@ -345,19 +345,52 @@ begin catch
 end catch
 go
 
-create procedure CRISPI.proc_comprar_oferta
+alter procedure CRISPI.proc_comprar_oferta
 @oferta int,
 @cliente int,
 --@fecha datetime,
-@cliente_destino int
+@cliente_destino numeric(18,0),
+@cantidad int,
+@credito numeric(18,2) 
 as 
 begin try
 	begin transaction
-	 insert into CRISPI.Venta(venta_oferta_id,venta_cliente_id,venta_fecha,venta_cliente_destino_id)
-	 values(@oferta,@cliente,GETDATE(),@cliente_destino)
+	declare @c int 
+	select @c=cliente_id from CRISPI.Cliente where cliente_dni=@cliente_destino
+	 insert into CRISPI.Venta(venta_oferta_id,venta_cliente_id,venta_fecha,venta_cliente_destino_id,venta_cantidad)
+	 values(@oferta,@cliente,GETDATE(),@c,@cantidad)
 	 declare @precio numeric(18,2) ,@precio2 numeric(18,2)
+	 select @precio=oferta_precio,@precio2=oferta_lista from CRISPI.Oferta where oferta_id=@oferta
 	 insert into CRISPI.Cupones(cupones_oferta_id,cupones_precio_oferta,cupones_precio_lista,cupones_cliente_id,cupones_estado_id)
 	 values(@oferta,@precio,@precio2,@cliente,1)
+	 update CRISPI.Cliente
+	 set cliente_credito=@credito
+	 where cliente_id=@cliente
+
+	commit transaction
+end try
+begin catch
+	rollback transaction
+	throw;
+end catch
+go
+
+create procedure CRISPI.proc_cargar_credito
+@cliente int,
+@tipo int,
+@credito numeric(18,2),
+@a nvarchar(255),
+@tarjeta numeric(18,0)
+as 
+begin try
+	begin transaction
+	
+	 insert into CRISPI.Credito(credito_cliente_id,credito_monto,credito_tarjeta,credito_tipo_pago_id,credito_datos,credito_fecha)
+	 values(@cliente,@credito,@tarjeta,@tipo,@a,GETDATE())
+	 
+	 update CRISPI.Cliente
+	 set cliente_credito=cliente_credito+@credito
+	 where cliente_id=@cliente
 
 	commit transaction
 end try
@@ -417,22 +450,12 @@ begin catch
 end catch
 go
 
-/*
-create procedure CRISPI.facturar
-	@fecha datetime
-as
-begin try
-	begin transaction
-		insert into CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_proveedor_id,facturacion_fecha,facturacion_monto)
-		values()
-		insert into CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id,item_factura_cantidad)
-		select * from CRISPI.Venta join CRISPI.Oferta on venta_oferta_id=oferta_id
-		where oferta_proveedor_id=@proveedor and year(venta_fecha)=year(@fecha) and month(venta_fecha)=month(@fecha)
-		commit transaction
-end try
-begin catch
-	rollback transaction
-end catch
+select tipo_pago_id,tipo_pago_nombre from CRISPI.Tipo_pago
 
-go*/
+
+
+select * from CRISPI.Cliente 
+192
+
+
 

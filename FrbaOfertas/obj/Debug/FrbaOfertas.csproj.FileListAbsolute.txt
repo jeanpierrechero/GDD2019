@@ -38,3 +38,4 @@ C:\Users\omar coca mariscal\Desktop\GDD2019\FrbaOfertas\bin\Debug\FrbaOfertas.pd
 C:\Users\omar coca mariscal\Desktop\GDD2019\FrbaOfertas\bin\Debug\conexionsql.dll
 C:\Users\omar coca mariscal\Desktop\GDD2019\FrbaOfertas\bin\Debug\conexionsql.pdb
 C:\Users\omar coca mariscal\Desktop\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.CopyComplete
+C:\Users\omar coca mariscal\Desktop\GDD2019\FrbaOfertas\obj\Debug\FrbaOfertas.Facturar.Form1.resources
