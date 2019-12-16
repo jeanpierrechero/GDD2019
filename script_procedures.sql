@@ -417,22 +417,78 @@ begin catch
 end catch
 go
 
-/*
+
+create procedure CRISPI.mostrar_ofertas_vendidad(@proveedor_rs nvarchar(100),@fecha_inicio date,@fecha_fin date)
+as
+	declare @proveedor_id int;
+
+	set @proveedor_id = (select top 1 proveedor_id from CRISPI.Proveedor where proveedor_rs = @proveedor_rs);
+
+	select * from CRISPI.ofertas_facturas 
+	where format(CONVERT(date,fecha_compra),'yyyy-MM-dd')>= @fecha_inicio and 
+		format(CONVERT(date,fecha_compra),'yyyy-MM-dd') <= @fecha_fin and 
+		proveedor_id = @proveedor_id;
+	
+go
+
+
+create function CRISPI.func_monto_factura(@proveedor_rs nvarchar(100),@fecha_inicio date,@fecha_fin date)
+returns decimal(18,2)
+as
+begin
+	declare @monto decimal(18,2);
+
+	select @monto = ISNULL(sum(o.oferta_precio * v.venta_cantidad),0)
+	from CRISPI.Venta v
+	join CRISPI.Oferta o on o.oferta_id = v.venta_oferta_id
+	join CRISPI.Cliente c on c.cliente_id = v.venta_cliente_id
+	join CRISPI.Rubro_Proveedor rp on rp.rubro_proveedor_id = o.oferta_rubro_proveedor_id
+	join CRISPI.Proveedor p on p.proveedor_rs = @proveedor_rs
+	where format(CONVERT(date,v.venta_fecha),'yyyy-MM-dd')>= @fecha_inicio and 
+		format(CONVERT(date,v.venta_fecha),'yyyy-MM-dd') <= @fecha_fin and 
+		p.proveedor_rs = @proveedor_rs;
+
+		return @monto;
+end
+go
+
+
+
 create procedure CRISPI.facturar
-	@fecha datetime
+	@proveedor_rs nvarchar(100),
+	@fecha_inicio date,
+	@fecha_fin date
 as
 begin try
-	begin transaction
-		insert into CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_proveedor_id,facturacion_fecha,facturacion_monto)
-		values()
-		insert into CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id,item_factura_cantidad)
-		select * from CRISPI.Venta join CRISPI.Oferta on venta_oferta_id=oferta_id
-		where oferta_proveedor_id=@proveedor and year(venta_fecha)=year(@fecha) and month(venta_fecha)=month(@fecha)
-		commit transaction
+	
+	declare @factura_id int;
+	declare @proveedor_id int;
+
+	set @proveedor_id = (select top 1 proveedor_id from CRISPI.Proveedor where proveedor_rs = @proveedor_rs);
+
+	insert into CRISPI.Facturacion(facturacion_nro,facturacion_tipo,facturacion_proveedor_id,facturacion_fecha)
+	values ((select max(facturacion_nro) + 1 from CRISPI.Facturacion),'A',@proveedor_id,GETDATE())
+	SET @factura_id=SCOPE_IDENTITY();
+
+
+	insert into CRISPI.Item_factura(facturacion_id,cliente_id,oferta_id,item_factura_cantidad)
+	select @factura_id,c.cliente_id,o.oferta_id,v.venta_cantidad
+	from CRISPI.Venta v
+	join CRISPI.Oferta o on o.oferta_id = v.venta_oferta_id
+	join CRISPI.Cliente c on c.cliente_id = v.venta_cliente_id
+	join CRISPI.Rubro_Proveedor rp on rp.rubro_proveedor_id = o.oferta_rubro_proveedor_id
+	where format(CONVERT(date,v.venta_fecha),'yyyy-MM-dd')>= @fecha_inicio and 
+		format(CONVERT(date,v.venta_fecha),'yyyy-MM-dd') <= @fecha_fin and 
+		rp.rubro_proveedor = @proveedor_id;
+
+	update CRISPI.Facturacion set facturacion_monto = (
+	select ISNULL(sum(o.oferta_precio * it.item_factura_cantidad),0) from CRISPI.Item_factura it
+	join CRISPI.Oferta o on o.oferta_id = it.oferta_id)
+	where facturacion_id = @factura_id
+
 end try
 begin catch
 	rollback transaction
 end catch
 
-go*/
 

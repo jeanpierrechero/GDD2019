@@ -35,8 +35,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.fecha_fin = new System.Windows.Forms.DateTimePicker();
             this.dgv_ofertas = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.lbl_monto = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_ofertas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +58,7 @@
             this.proveedores.Name = "proveedores";
             this.proveedores.Size = new System.Drawing.Size(190, 21);
             this.proveedores.TabIndex = 1;
-            this.proveedores.SelectedIndexChanged += new System.EventHandler(this.proveedores_SelectedIndexChanged);
+            this.proveedores.Click += new System.EventHandler(this.proveedores_SelectedIndexChanged);
             // 
             // fecha_inicio
             // 
@@ -66,6 +68,7 @@
             this.fecha_inicio.Name = "fecha_inicio";
             this.fecha_inicio.Size = new System.Drawing.Size(190, 20);
             this.fecha_inicio.TabIndex = 2;
+            this.fecha_inicio.ValueChanged += new System.EventHandler(this.fecha_inicio_ValueChanged);
             // 
             // label2
             // 
@@ -93,6 +96,7 @@
             this.fecha_fin.Name = "fecha_fin";
             this.fecha_fin.Size = new System.Drawing.Size(190, 20);
             this.fecha_fin.TabIndex = 4;
+            this.fecha_fin.ValueChanged += new System.EventHandler(this.fecha_fin_ValueChanged);
             // 
             // dgv_ofertas
             // 
@@ -110,14 +114,45 @@
             this.button2.TabIndex = 8;
             this.button2.Text = "Facturar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(129, 125);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Filtrar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(15, 124);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 10;
+            this.button3.Text = "Limpiar";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // lbl_monto
+            // 
+            this.lbl_monto.AutoSize = true;
+            this.lbl_monto.Location = new System.Drawing.Point(497, 93);
+            this.lbl_monto.Name = "lbl_monto";
+            this.lbl_monto.Size = new System.Drawing.Size(0, 13);
+            this.lbl_monto.TabIndex = 11;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(905, 406);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.lbl_monto);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.dgv_ofertas);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.fecha_fin);
@@ -142,7 +177,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker fecha_fin;
         private System.Windows.Forms.DataGridView dgv_ofertas;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label lbl_monto;
     }
 }

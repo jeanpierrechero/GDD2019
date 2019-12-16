@@ -149,7 +149,7 @@ namespace FrbaOfertas
 
         private void facturacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ComprarOferta.mostrarofertas a = new ComprarOferta.mostrarofertas(sesion);
+            Facturar.Form1 a = new Facturar.Form1();
             a.MdiParent = this;
             a.Show();
         }

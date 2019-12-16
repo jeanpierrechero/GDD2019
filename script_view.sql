@@ -42,8 +42,9 @@ GO
 
 CREATE VIEW CRISPI.ofertas_facturas AS
 select o.oferta_codigo as codigo,o.oferta_descripcion as oferta_descripcion,c.cliente_nombre as cliente_nombre,
-	v.venta_fecha as fecha_compra, v.venta_cantidad as cantidad 
+	v.venta_fecha as fecha_compra, v.venta_cantidad as cantidad,o.oferta_precio as precio,rp.rubro_proveedor as proveedor_id 
 from CRISPI.Venta v
 join CRISPI.Oferta o on o.oferta_id = v.venta_oferta_id
 join CRISPI.Cliente c on c.cliente_id = v.venta_cliente_id
+join CRISPI.Rubro_Proveedor rp on rp.rubro_proveedor_id = o.oferta_rubro_proveedor_id
 GO
